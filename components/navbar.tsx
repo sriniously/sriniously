@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Header from "./header";
 
 const links = [
   {
@@ -47,4 +46,4 @@ const Navbar = () => {
   );
 };
 
-export default Header;
+export default Navbar;
