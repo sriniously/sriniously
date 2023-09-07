@@ -12,44 +12,56 @@ const poppins = Poppins({
 
 const qualities = [
   {
-    text: "💻 engineer",
-    subtext: "✅",
+    text: "👽 Alien believer",
+    subtext: "(Because I've seen them at family dinners)",
     initial: "hidden",
     animate: "visible",
   },
   {
-    text: "💭 dreamer",
-    subtext: "✅",
+    text: "💭 Imaginary Schwarzenegger",
+    subtext: "(My biceps are huge in the Matrix)",
     initial: "hidden",
     animate: "visible",
   },
   {
-    text: "☕️ coffee addict",
-    subtext: "(proudly)",
+    text: "💡 Open Source Romantic",
+    subtext: "(Believes in free love and free code)",
     initial: "hidden",
     animate: "visible",
   },
   {
-    text: "💪🏼 fitness freak",
-    subtext: "(soon enough)",
+    text: "⚙️ Next.js Oracle",
+    subtext: "(It's not just a framework, it's a prophecy)",
     initial: "hidden",
     animate: "visible",
   },
   {
-    text: "📚 avid reader",
-    subtext: "(self proclaimed)",
+    text: "📘 TypeScript Poet",
+    subtext: "(Where typings are my verses)",
     initial: "hidden",
     animate: "visible",
   },
   {
-    text: "💍 husband",
-    subtext: "(If she says yes)",
+    text: "🎩 Hat Connoisseur",
+    subtext: "(Wearing many, but mostly metaphorical ones)",
     initial: "hidden",
     animate: "visible",
   },
   {
-    text: "🍼 father",
-    subtext: "(waiting for my dad jokes to mature)",
+    text: "🎢 Emotional Roller-coaster Engineer",
+    subtext: "(Crafting highs and lows in code and life)",
+    initial: "hidden",
+    animate: "visible",
+  },
+  {
+    text: "🌪️ Refactor Tornado",
+    subtext: "(Turning messy code into... a different kind of mess)",
+    initial: "hidden",
+    animate: "visible",
+  },
+  {
+    text: "⏳ Procrastination Guru",
+    subtext: "(I'll write a better subtext later)",
     initial: "hidden",
     animate: "visible",
   },
@@ -163,16 +175,15 @@ const Hero = () => {
                 animate={quality.animate}
                 variants={checkedVariants}
               >
-                <span className="text-sm text-stone-700">{quality.text}</span>
+                <span className="text-sm lg:text-base text-stone-700">
+                  {quality.text}
+                </span>
               </motion.span>
               <motion.span
                 initial="hidden"
                 animate={quality.animate}
                 variants={checkedVariants}
-                className={cn(
-                  "text-xs mt-2",
-                  quality.subtext !== "✅" && "gradient-text"
-                )}
+                className="text-xs mt-2 gradient-text"
               >
                 {quality.subtext}
               </motion.span>
