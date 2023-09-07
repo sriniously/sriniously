@@ -12,18 +12,6 @@ const poppins = Poppins({
 
 const qualities = [
   {
-    text: "👽 Alien believer",
-    subtext: "(Because I've seen them at family dinners)",
-    initial: "hidden",
-    animate: "visible",
-  },
-  {
-    text: "💭 Imaginary Schwarzenegger",
-    subtext: "(My biceps are huge in the Matrix)",
-    initial: "hidden",
-    animate: "visible",
-  },
-  {
     text: "💡 Open Source Romantic",
     subtext: "(Believes in free love and free code)",
     initial: "hidden",
@@ -60,8 +48,14 @@ const qualities = [
     animate: "visible",
   },
   {
-    text: "⏳ Procrastination Guru",
-    subtext: "(I'll write a better subtext later)",
+    text: "👽 Alien believer",
+    subtext: "(Because I've seen them at family dinners)",
+    initial: "hidden",
+    animate: "visible",
+  },
+  {
+    text: "💭 Imaginary Schwarzenegger",
+    subtext: "(My biceps are huge in the Matrix)",
     initial: "hidden",
     animate: "visible",
   },
@@ -175,9 +169,7 @@ const Hero = () => {
                 animate={quality.animate}
                 variants={checkedVariants}
               >
-                <span className="text-xs lg:text-sm text-stone-700">
-                  {quality.text}
-                </span>
+                <span className="text-sm text-stone-700">{quality.text}</span>
               </motion.span>
               <motion.span
                 initial="hidden"
