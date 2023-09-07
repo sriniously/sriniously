@@ -133,7 +133,7 @@ const Hero = () => {
       <motion.h1
         className={cn(
           poppins.className,
-          "flex items-center font-bold text-4xl lg:text-6xl gap-4 lg:gap-8"
+          "flex items-center font-bold text-3xl lg:text-6xl gap-4 lg:gap-8"
         )}
         variants={containerVariants}
         initial="hidden"
@@ -145,7 +145,7 @@ const Hero = () => {
 
       <motion.div className="mt-10 flex flex-col lg:flex-row items-start gap-10">
         <motion.div
-          className="lg:w-[400px] w-full lg:h-[700px] h-[500px] relative"
+          className="lg:w-[400px] w-full lg:h-[500px] h-[500px] relative"
           variants={imageVariants}
           initial="hidden"
           animate="visible"
@@ -168,14 +168,14 @@ const Hero = () => {
             <motion.li
               key={index}
               variants={qualityVariants}
-              className="mt-2 flex gap-2"
+              className="mt-2 flex flex-col lg:flex-row lg:gap-2"
             >
               <motion.span
                 initial={quality.initial}
                 animate={quality.animate}
                 variants={checkedVariants}
               >
-                <span className="text-sm lg:text-base text-stone-700">
+                <span className="text-xs lg:text-base text-stone-700">
                   {quality.text}
                 </span>
               </motion.span>
@@ -183,7 +183,7 @@ const Hero = () => {
                 initial="hidden"
                 animate={quality.animate}
                 variants={checkedVariants}
-                className="text-xs mt-2 gradient-text"
+                className="text-xs lg:mt-2 ml-4 lg:ml-0 gradient-text"
               >
                 {quality.subtext}
               </motion.span>
