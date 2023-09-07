@@ -170,7 +170,7 @@ const Hero = () => {
                 animate={quality.animate}
                 variants={checkedVariants}
                 className={cn(
-                  "text-xs mt-1",
+                  "text-xs mt-2",
                   quality.subtext !== "✅" && "gradient-text"
                 )}
               >
