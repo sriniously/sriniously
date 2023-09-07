@@ -121,7 +121,7 @@ const Hero = () => {
       <motion.h1
         className={cn(
           poppins.className,
-          "flex items-center font-bold text-5xl lg:text-8xl gap-4 lg:gap-8"
+          "flex items-center font-bold text-5xl lg:text-6xl gap-4 lg:gap-8"
         )}
         variants={containerVariants}
         initial="hidden"

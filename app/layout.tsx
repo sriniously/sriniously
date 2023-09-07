@@ -1,12 +1,23 @@
 import { cn } from "@/lib/utils";
 import "../styles/globals.css";
 import type { Metadata } from "next";
-import { Ysabeau } from "next/font/google";
+import localFont from 'next/font/local';
 import Header from "@/components/header";
 
-const ysabeau = Ysabeau({
-  subsets: ["latin"],
-  weight: ["400", "700", "900", "1000"],
+const ysabeau = localFont({
+  src: [
+    {
+      path: '../public/fonts/Ysabeau-Medium.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Ysabeau-Black.ttf',
+      weight: '700',
+      style: 'bold',
+    },
+  ],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -51,7 +62,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn(
-        "bg-background max-w-3xl px-5 lg:mx-auto text-foreground",
+        "bg-background max-w-3xl text-xl px-5 lg:mx-auto text-foreground",
         ysabeau.className
       )}
     >
