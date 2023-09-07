@@ -49,7 +49,7 @@ const qualities = [
   },
   {
     text: "🍼 father",
-    subtext: "(some day if I am lucky enough)",
+    subtext: "(waiting for my dad jokes to mature)",
     initial: "hidden",
     animate: "visible",
   },
