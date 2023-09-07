@@ -62,7 +62,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn(
-        "bg-background max-w-3xl text-xl px-5 lg:mx-auto text-foreground",
+        "bg-background max-w-3xl text-xl px-4 lg:mx-auto text-foreground",
         ysabeau.className
       )}
     >
