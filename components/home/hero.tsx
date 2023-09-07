@@ -121,7 +121,7 @@ const Hero = () => {
       <motion.h1
         className={cn(
           poppins.className,
-          "flex items-center font-bold text-5xl lg:text-6xl gap-4 lg:gap-8"
+          "flex items-center font-bold text-4xl lg:text-6xl gap-4 lg:gap-8"
         )}
         variants={containerVariants}
         initial="hidden"
@@ -170,7 +170,7 @@ const Hero = () => {
                 animate={quality.animate}
                 variants={checkedVariants}
                 className={cn(
-                  "text-sm mt-1",
+                  "text-xs mt-1",
                   quality.subtext !== "✅" && "gradient-text"
                 )}
               >
