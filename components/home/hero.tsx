@@ -175,7 +175,7 @@ const Hero = () => {
                 animate={quality.animate}
                 variants={checkedVariants}
               >
-                <span className="text-xs lg:text-base text-stone-700">
+                <span className="text-xs lg:text-sm text-stone-700">
                   {quality.text}
                 </span>
               </motion.span>
