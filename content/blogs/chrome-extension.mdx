@@ -1,0 +1,487 @@
+---
+title: "Deep Dive into Chrome Extensions: From Lifecycle to Dataflow"
+summary: "Unveiling Chrome Extension Insights: Lifecycle, Dataflow & More. Gain a deep understanding of extension creation and data management."
+publishedAt: "2023-07-07"
+image: /images/chrome-extension/1.webp
+published: true
+---
+
+Developing a Chrome extension can be an exciting way to customize your browser's functionality or build a product that serves millions of users worldwide. In this post, we will take a deep dive into the architecture of a Chrome extension, what are all the components that work together to make up a browser extension, what is the Lifecycle of each of those components, and how data flows between them. We'll also delve into the nuances between Manifest V2 and V3.
+
+<div data-node-type="callout">
+  <div data-node-type="callout-emoji">💡</div>
+  <div data-node-type="callout-text">
+    In this post, we will mostly be covering Google Chrome's manifest version 3.
+    But there are no major differences when it comes to other browsers and
+    manifest versions when we are talking about the high-level architecture of
+    browser extensions.
+  </div>
+</div>
+
+First, let's go through some of the core components of a basic Chrome extension, then we'll deep-dive into their relationship
+
+### Understanding the manifest
+
+A Chrome extension's life starts with a `manifest.json` file. It's a configuration file in JSON format that tells Chrome everything it needs to know about your extension. This includes the name, description, version, permissions, and, crucially, what scripts to run and when. Here's an example:
+
+```json
+{
+  "manifest_version": 3,
+  "name": "My Extension",
+  "version": "1.0",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
+```
+
+In the example above, the `background`, `action`, and `content_scripts` fields define the scripts Chrome will use for the extension. The `permissions` field tells Chrome what APIs the extension can access.
+
+### Background Script
+
+Background scripts are the "backend" of your extension. They listen for events and manage state. In Manifest V3, they have been replaced by service workers, which are event-driven, short-lived scripts that wake up when they need to handle an event and go back to sleep when they're done.
+
+In Manifest V2, background scripts persist until the browser is closed. However, Manifest V3 introduced service workers as background scripts that are event-driven and short-lived. These scripts wake up when an event occurs, handle the event, and go back to sleep, saving resources.
+
+Background scripts have access to almost all of the Chrome extension APIs (exceptions are a few like `chrome.tabCapture`). They can't access the DOM of a web page directly but can inject content scripts into web pages.
+
+In the case of Manifest V3, due to the introduction of service workers, background scripts don't persist, making global state management harder. A solution could be to use the [`chrome.storage`](http://chrome.storage) API for state management.
+
+The event-driven nature of background scripts aligns perfectly with the JavaScript event loop, making it an excellent fit for managing browser events. The single-threaded nature of JavaScript, however, means that care must be taken not to block the thread with heavy processing, ensuring a responsive extension.
+
+Here's an example of a background script:
+
+```javascript
+chrome.runtime.onInstalled.addListener(function () {
+  console.log("Extension installed");
+});
+```
+
+This script listens for the `onInstalled` event, which fires when the extension is installed, and logs a message.
+
+### Content Script
+
+Content scripts are the only part of your extension that have direct access to the web pages your users visit. They can read and modify the DOM, listen for page events, and exchange messages with background scripts.
+
+Content scripts are injected into the pages specified in the manifest file, either when the page is loaded or at runtime using the `chrome.tabs.executeScript` method. The scripts run in an isolated world, separate from the page scripts, maintaining their own JavaScript environment.
+
+Content scripts have access to the DOM of the page they're injected into, but they cannot use JavaScript APIs provided by the webpage or vice versa due to the isolated environment. They also have limited access to Chrome's APIs and can't access variables or functions from background scripts.
+
+Content scripts run in the context of web pages. They can listen for DOM events, use JavaScript APIs, and interact with the webpage as if they were part of the page's own scripts. Like background scripts, they are part of the JavaScript event loop, and non-blocking practices should be applied.
+
+Here's an example of a content script:
+
+```javascript
+document.body.style.backgroundColor = "purple";
+```
+
+This script simply changes the background color of any page where it runs.
+
+### Popup
+
+The popup is the UI of your extension that users can interact with. It's an HTML document that can include CSS and JavaScript like any webpage. Popups are ephemeral and only stay open as long as they are active.
+
+Here's an example of a popup script:
+
+```javascript
+document.getElementById("button").addEventListener("click", function () {
+  console.log("Button clicked");
+});
+```
+
+This script adds a click event listener to a button in the popup.
+
+### Options
+
+The options page is where you provide settings for your users to customize the extension's behavior. It's another HTML document that can contain forms for user inputs.
+
+The popup is created when the user clicks the extension's icon, and it's destroyed as soon as it loses focus. The options page's lifecycle is like a regular webpage; it's created when a user opens it and destroyed when it's closed.
+
+Both popups and options pages have full access to Chrome's extension APIs. However, like content scripts, they can't access the JavaScript context of any web page.
+
+Popups and options pages are simply HTML documents with CSS and JavaScript. They operate like any web page, with the event loop managing JavaScript execution.
+
+### Life of a Browser Extension
+
+Now that we have a little idea of what each component does, let's look at how they interact:
+
+- **Step 1**: When a webpage is loaded, any content scripts defined in the `manifest.json` file is injected into the page. These scripts can interact with the webpage's DOM and send messages to the background scripts. This happens through the `chrome.runtime.sendMessage` API.
+  ```javascript
+  // content.js
+  chrome.runtime.sendMessage({
+    message: "page_loaded",
+    data: document.body.innerHTML,
+  });
+  ```
+- **Step 2**: The background script, set up to listen for messages from the content scripts or the browser, receives this message. It can then perform any necessary actions, such as saving the data, sending a response back, or sending another message to the popup.
+  ```javascript
+  // background.js
+  chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    if (request.message === "page_loaded") {
+      console.log("Page loaded with data: ", request.data);
+      sendResponse({ message: "data_received" });
+    }
+  });
+  ```
+- **Step 3**: If the user interacts with the extension's popup (e.g., clicking a button), the popup's scripts can also send and receive messages to/from the background scripts, providing interactivity and triggering actions in the background scripts.
+  ```javascript
+  // popup.js
+  document.getElementById("button").addEventListener("click", function () {
+    chrome.runtime.sendMessage(
+      { message: "button_clicked" },
+      function (response) {
+        console.log(response.message);
+      }
+    );
+  });
+  ```
+
+The below diagram tries to visualize the component, APIs and the data flow between them:
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1688728321583/39efd8c9-508c-43dc-9f39-6ad2ca20f70c.png align="center")
+
+### Message-passing model
+
+The `chrome.runtime.sendMessage` and `chrome.runtime.onMessage` APIs are available to both background scripts and content scripts and also to other extension pages like options and popups. These APIs allow communication between different parts of the extension:
+
+- A content script can send a message to a background script (or vice versa) using `chrome.runtime.sendMessage`.
+- A background script can listen for messages from a content script (or vice versa) using `chrome.runtime.onMessage`.
+
+The `chrome.tabs.sendMessage` and `chrome.tabs.onMessage` APIs, on the other hand, are only available to background scripts and extension pages (popup and options page), not to content scripts. These APIs are used to send a message to a specific tab:
+
+- A background script (or an extension page) can send a message to a content script in a specific tab using `chrome.tabs.sendMessage`.
+- A content script can listen for these messages using `chrome.runtime.onMessage`.
+
+So in summary:
+
+- `chrome.runtime.sendMessage` and `chrome.runtime.onMessage`: accessible by background scripts, content scripts, popups, and options page.
+- `chrome.tabs.sendMessage`: accessible by background scripts, popups, and options page.
+- There's no `chrome.tabs.onMessage`. A content script listens for messages sent from a specific tab using `chrome.runtime.onMessage`.
+
+Note that in both cases, the sender and receiver scripts should be a part of the same extension. Communication between different extensions or between an extension and a webpage is not supported by these APIs.
+
+### Which one is the right API to send a message?
+
+Both `chrome.runtime.sendMessage` and `chrome.tabs.sendMessage` are used for inter-component communication within a Chrome extension, but they serve different purposes:
+
+- **chrome.runtime.sendMessage**: This method is used when you need to send a message from one part of your extension to another, but you don't care specifically who receives it. For instance, you could use this method in a content script to send a message to the background script. This is a broadcast-type message, as all listeners set up through `chrome.runtime.onMessage` will receive the message.
+- **chrome.tabs.sendMessage**: This method is used when you need to send a message to a specific tab. This is typically used in a background script or popup script when you need to communicate directly with a content script in a specific tab. It's a more targeted communication approach compared to `chrome.runtime.sendMessage`.
+
+So the decision to use one over the other depends largely on your use case and the specific communication requirements of your extension.
+
+Here are some scenarios to help you understand when to use which:
+
+1. If a content script needs to send some information (e.g., some data scraped from the current page) to the background script, `chrome.runtime.sendMessage` would be a suitable choice.
+2. If a background script needs to instruct a content script in a specific tab to perform a certain action (e.g., manipulate the DOM, interact with the page's JavaScript), `chrome.tabs.sendMessage` would be used.
+3. If a popup script needs to request some data from a content script in the currently active tab, `chrome.tabs.sendMessage` would be used.
+4. If a popup script or options page needs to update some global extension state managed by the background script, `chrome.runtime.sendMessage` could be used.
+
+### Web and Browser resources
+
+For each of these components, let's discuss how they interact with the various web resources:
+
+1. **localStorage/sessionStorage (Web Storage API)**: Content scripts can access the same localStorage or sessionStorage objects as the page they're attached to, but they must do so through the DOM (window.localStorage / window.sessionStorage). They cannot directly access localStorage or sessionStorage of the background context. However, background, popup, and options scripts can freely access their own localStorage and sessionStorage associated with the extension's internal pages (origin chrome-extension://\[ID\]).
+2. **chrome.storage.local/sync (Chrome Storage API)**: These are available for all extension scripts (background, content, popup, options). Data stored using these methods is shared across all scripts in the extension, and even across devices for the `chrome.storage.sync`.
+3. **Cookies**: Content scripts cannot directly interact with cookies via `document.cookie` due to the same-origin policy. The `chrome.cookies` API provides direct interaction with cookies, but it's only available to background, popup, and options scripts. Scripts can use this API to get, set, and remove cookies, and to listen for cookie changes.
+4. **IndexedDB**: Content scripts can access the same IndexedDB databases as the page they're attached to, but they must do so through the DOM (window.indexedDB). Background, popup, and options scripts each have their own IndexedDB that is isolated from webpages and content scripts.
+5. **WebSQL (deprecated)**: Content scripts can access the same WebSQL databases as the page they're attached to, but they must do so through the DOM (window.openDatabase). Background, popup, and options scripts each have their own WebSQL that is isolated from webpages and content scripts.
+6. **File System (FileSystem API)**: Extensions cannot directly use the File System API in webpages. Extensions may use the `chrome.fileSystem` API in background, popup, and options scripts, but this API isn't available in content scripts.
+7. **Cache API/Service Workers**: Extensions use service workers as their background scripts. Content scripts don't have direct access to the service worker or the Cache API associated with the webpage. Background, Popup, and Options scripts each have their own service worker scope and associated Cache API.
+8. **Origin/Domain**: Content scripts interact with web pages, but run in an isolated world, with a separate JavaScript context. This protects the webpage from potentially malicious actions by the extension, and vice versa. Background, Popup, and Options pages have their own origin (chrome-extension://\[ID\]).
+9. **Runtime**: Each extension component operates in its own JavaScript environment. Content scripts do not share the JavaScript runtime with the webpage but run in an isolated context. Background, Popup, and Options scripts each have their own JavaScript runtime.
+10. **Manifest**: The `manifest.json` file contains metadata about the extension, including its name, description, version, and permissions. It also specifies background scripts, content scripts, popup scripts, and options scripts. All components of an extension share the same manifest file.
+11. **chrome.APIs**: Many `chrome.*` APIs are available only to background, popup, and options scripts due to security and privacy reasons. Content scripts have access to a limited subset of `chrome.*` APIs. To use these APIs in a content script, the extension typically sends a message to a background script, which performs the action and can return the result.
+12. **HTTP Requests**: Content scripts cannot make cross-origin AJAX requests in the same way as the pages they're injected into because they are subject to the extension's Content Security Policy (CSP). Background, popup, and options scripts can make cross-origin requests if the host is specified in the `permissions` field in the `manifest.json` file.
+
+### Manifest v2 vs. v3
+
+As of now, the browser extension ecosystem is in a complicated spot between the transition from manifest version 2 to 3, and the support of different browsers. It's important to understand the nuances of these two versions now more than ever.
+
+Sure, I can provide an overview of the differences between Manifest V2 and Manifest V3 for Chrome Extensions, along with some of the motivations behind these changes.
+
+**1\. Background Scripts:**
+
+_Manifest V2:_
+
+Background scripts in Manifest V2 can be persistent and remain running as long as Chrome is open. The `background` field in `manifest.json` allows for a persistent background page by including a `scripts` key.
+
+Example:
+
+```json
+"background": {
+  "scripts": ["background.js"],
+  "persistent": true
+}
+```
+
+_Manifest V3:_
+
+In Manifest V3, the `background` field in the manifest has been replaced by `background_service`, and the `persistent` key has been removed. Instead of long-lived background pages, V3 extensions must use service workers which are short-lived, event-driven scripts.
+
+Example:
+
+```json
+"background": {
+  "service_worker": "background.js"
+}
+```
+
+_Reason for Change:_
+
+Persistent background pages often consume significant system resources, and keeping them open even when not needed can slow down the whole system. Service workers, on the other hand, are designed to be short-lived and event-driven, which means they only wake up when they're needed and shut down when they're not. This reduces the load on system resources, improving overall system performance.
+
+One disadvantage is that the switch to service workers requires a different way of thinking about how to structure and handle tasks in the background script. Also, some APIs that depend on a long-lived connection, like `chrome.sockets.*`, are not available in Manifest V3.
+
+**2\. Host Permissions:**
+
+_Manifest V2:_
+
+In Manifest V2, extensions could request access to all hosts using the `<all_urls>` permission in the manifest.
+
+Example:
+
+```json
+"permissions": ["<all_urls>"]
+```
+
+_Manifest V3:_
+
+In Manifest V3, broad host permissions are discouraged and will trigger a warning in the manifest. Instead, optional permissions should be used to request access to specific sites when needed.
+
+Example:
+
+```json
+"permissions": ["storage"],
+"host_permissions": [
+  "http://example.com/"
+]
+```
+
+_Reason for Change:_
+
+This change was made to improve user privacy. Broad permissions often led to over-privileged extensions, which could pose a security risk if they were exploited or misused. By encouraging more granular permissions, users have more control over what data extensions can access.
+
+The disadvantage is that developers need to manage permissions more actively, including requesting permissions at runtime and handling cases where permission is not granted.
+
+**3\. Content Scripts:**
+
+_Manifest V2:_
+
+In Manifest V2, content scripts were declared statically in the manifest, under the `content_scripts` field.
+
+Example:
+
+```json
+"content_scripts": [{
+  "matches": ["http://*.example.com/*"],
+  "css": ["styles.css"],
+  "js": ["contentScript.js"]
+}]
+```
+
+_Manifest V3:_
+
+In Manifest V3, content scripts can still be declared in the manifest, but dynamic content scripts can also be registered at runtime using `chrome.scripting.registerContentScript()`.
+
+Example:
+
+```json
+"action": {
+  "default_popup": "popup.html",
+  "default_icon": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+},
+"permissions": ["scripting"],
+"host_permissions": ["http://*.example.com/*"]
+```
+
+Then in your background script:
+
+```javascript
+chrome.action.onClicked.addListener((tab) => {
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: ["contentScript.js"],
+  });
+});
+```
+
+_Reason for Change:_
+
+This change allows more dynamic and flexible injection of content scripts. Instead of always injecting the scripts on pages that match the specified patterns, developers can now choose when to inject scripts based on other conditions, like user actions. This provides more control to the extension developers and helps limit the overuse of content scripts.
+
+However, the downside is that developers now need to manage the timing and conditions for injecting content scripts.
+
+**4\. Popup Pages vs. Action API:**
+
+_Manifest V2:_
+
+In Manifest V2, developers used `browser_action` or `page_action` to create an extension button in the toolbar.
+
+Example:
+
+```json
+"browser_action": {
+  "default_icon": "icon.png",
+  "default_popup": "popup.html"
+}
+```
+
+_Manifest V3:_
+
+In Manifest V3, `browser_action` and `page_action` are replaced by `action` and `chrome.action` API, simplifying the model to a single way to create a button.
+
+Example:
+
+```json
+"action": {
+  "default_icon": "icon.png",
+  "default_popup": "popup.html"
+}
+```
+
+_Reason for Change:_
+
+This change was made to simplify the APIs and to provide a unified way to create an extension button. Before, developers had to decide whether to use a `browser_action` or a `page_action` and handle them differently. Now, there's only one kind of action, and it's handled the same way in all cases.
+
+This change doesn't have many disadvantages, and the main impact is that developers need to update their extensions to use the new `action` key and API.
+
+**5\. Remote Code Execution:**
+
+_Manifest V2:_
+
+In Manifest V2, developers could dynamically execute code using methods like `chrome.tabs.executeScript`.
+
+Example:
+
+```javascript
+chrome.tabs.executeScript({
+  code: 'document.body.style.backgroundColor = "red"',
+});
+```
+
+_Manifest V3:_
+
+In Manifest V3, the ability to execute arbitrary strings of code was removed. Developers must use file-based scripts instead.
+
+Example:
+
+```javascript
+chrome.scripting.executeScript({
+  target: { tabId: tab.id },
+  files: ["changeBackground.js"],
+});
+```
+
+_Reason for Change:_
+
+This change improves security by reducing the risk of code injection attacks. Executing arbitrary strings of code can be risky, because it's harder to control what's being executed. By requiring file-based scripts, Manifest V3 ensures that only known scripts that are part of the extension package can be executed.
+
+The disadvantage is that developers can no longer execute dynamic scripts and need to manage a larger number of script files.
+
+**6\. Declarative Net Request API:**
+
+_Manifest V2:_
+
+In Manifest V2, developers could use the `chrome.webRequest` API to intercept network requests and modify, redirect, or block them.
+
+Example:
+
+```javascript
+chrome.webRequest.onBeforeRequest.addListener(
+  function (details) {
+    return { cancel: true };
+  },
+  { urls: ["*://*.example.com/*"] },
+  ["blocking"]
+);
+```
+
+_Manifest V3:_
+
+In Manifest V3, the `chrome.webRequest` API is replaced by the `chrome.declarativeNetRequest` API for most uses. This API allows developers to declare what should be done with network requests in advance, rather than requiring runtime scripts to intercept each request.
+
+Example:
+
+```json
+"permissions": ["declarativeNetRequest"],
+"declarative_net_request": {
+  "rule_resources": ["rules.json"]
+}
+```
+
+And in `rules.json`:
+
+```json
+{
+  "id": 1,
+  "priority": 1,
+  "action": { "type": "block" },
+  "condition": {
+    "urlFilter": "example.com",
+    "resourceTypes": ["main_frame"],
+    "domains": ["example.com"],
+    "domainType": "equal"
+  }
+}
+```
+
+_Reason for Change:_
+
+The change from `webRequest` to `declarativeNetRequest` improves performance and privacy. With `webRequest`, all requests from the browser had to be sent through the extension, potentially causing slowdowns and privacy issues. With `declarativeNetRequest`, Chrome can handle requests in the browser without needing to send them to the extension, resulting in better performance and more privacy.
+
+The disadvantage is that `declarativeNetRequest` is less flexible than `webRequest`, as it doesn't allow dynamic modification of network requests. This could limit the functionality of some types of extensions, such as privacy or security extensions that need fine-grained control over network requests.
+
+**7\. Isolated Worlds and Scripting API:**
+
+_Manifest V2:_
+
+In Manifest V2, content scripts ran in an "isolated world" within the page's environment, with access to the DOM but not to JavaScript variables or functions defined by the page or by other content scripts.
+
+Example:
+
+```javascript
+var divs = document.querySelectorAll("div");
+console.log(divs.length);
+```
+
+_Manifest V3:_
+
+In Manifest V3, the new `chrome.scripting` API provides a more explicit way to execute scripts in different contexts.
+
+Example:
+
+```javascript
+chrome.scripting.executeScript({
+  target: { tabId: tab.id },
+  function: () => {
+    var divs = document.querySelectorAll("div");
+    console.log(divs.length);
+  },
+});
+```
+
+_Reason for Change:_
+
+The new `chrome.scripting` API improves security and clarity. By explicitly specifying the context in which a script is to be run, it helps to avoid potential security issues that could arise from the unclear boundaries between different contexts in a page.
+
+However, the new `chrome.scripting` API is more verbose and requires a different way of thinking about how scripts interact with web pages.
+
+Overall, the shift from Manifest V2 to V3 brings more security, privacy, and performance at the cost of some flexibility and complexity.

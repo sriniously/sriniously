@@ -1,0 +1,128 @@
+---
+title: "Introducing the Naruto DB: The most extensive public Naurto API for Naruto Universe"
+summary: "Our Naruto API provides access to a vast collection of information about the Naruto universe, including characters, clans, villages, and more."
+publishedAt: "2023-03-05"
+image: /images/introducing-narutodb/1.png
+published: true
+---
+
+Are you a fan of the Naruto anime and manga series? Are you looking for a comprehensive resource that can provide you with all the information you need about the characters, clans, villages, teams, Akatsuki, Kara, kekkei-genkai, and Tailed-beasts in the Naruto universe? Look no further than the Naruto DB!
+
+We are excited to announce the launch of the [Naruto DB](https://www.narutodb.xyz/), a free resource that provides detailed information about the Naruto universe. With this API, you can easily retrieve information about your favourite characters and explore the rich lore and world-building of the Naruto universe.
+
+The Naruto API is designed to be easy to use and flexible. Simply make a GET request to the appropriate endpoint with the required parameters, and the API will return all available information about the requested resource in JSON format.
+
+```bash
+curl -X 'GET' \
+        'https://api.narutodb.xyz/character' \
+     -H 'accept: application/json'
+```
+
+```bash
+{
+  "characters": [
+    {
+      "id": 0,
+      "name": "Zero-Tails",
+      "images": [
+        "https://static.wikia.nocookie.net/naruto/images/8/87/Zero_tails.PNG/revision/latest/scale-to-width-down/300?cb=20120518185128"
+      ],
+      "debut": {
+        "novel": "Naruto Shippūden the Movie: Bonds",
+        "movie": "Naruto Shippūden the Movie: Bonds",
+        "appearsIn": "Novel, Movie"
+      },
+      "jutsu": [
+        "Shadow Arms"
+      ],
+      "personal": {
+        "species": "Leech"
+      },
+      "uniqueTraits": [
+        "Detects negative emotions",
+        "Feeds on darkness in a beings heart to create dark chakra"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Ten-Tails",
+      "images": [
+        "https://static.wikia.nocookie.net/naruto/images/e/e6/Ten-Tails_emerges.png/revision/latest/scale-to-width-down/300?cb=20140523101840"
+      ],
+      "debut": {
+        "manga": "Naruto Chapter #467",
+        "anime": "Naruto Shippūden Episode #205",
+        "novel": "The Last: Naruto the Movie",
+        "movie": "The Last: Naruto the Movie",
+        "game": "Naruto Shippūden: Ultimate Ninja Storm Revolution",
+        "ova": "The Far Reaches of Hope",
+        "appearsIn": "Anime, Manga, Novel, Game, Movie"
+      },
+      "family": {
+        "incarnation with the god tree": "Kaguya Ōtsutsuki",
+        "depowered form": "Demonic Statue of the Outer Path"
+      },
+      "jutsu": [
+        "Six Paths Senjutsu",
+        "Tailed Beast Ball",
+        "Tailed Beast Chakra Arms",
+        "Tailed Beast Shockwave",
+        "Ten-Tails Fission",
+        "Tenpenchii",
+        "Truth-Seeking Ball",
+        "Wood Release: Cutting Technique"
+      ],
+      "natureType": [
+        "Fire Release",
+        "Wind Release",
+        "Lightning Release",
+        "Earth Release",
+        "Water Release",
+        "Wood Release",
+        "Yin Release",
+        "Yang Release",
+        "Yin–Yang Release"
+      ],
+      "personal": {
+        "status": "Incapacitated",
+        "kekkeiGenkai": "Wood Release",
+        "classification": "Tailed Beast",
+        "jinchūriki": [
+          "Hagoromo Ōtsutsuki",
+          "Obito Uchiha",
+          "Madara Uchiha"
+        ],
+        "titles": [
+          "十尾Jūbi",
+          "one-eyedGod(天目一箇神,AmeNoHitotsuNoKami)",
+          "datara(ダタラ)",
+          "deidarabotchi(デイダラボッチ,Deidarabocchi)",
+          "nation-buildingGod(国造りの神,KunizukuriNoKami)"
+        ]
+      },
+      "uniqueTraits": [
+        "Can absorb chakra"
+      ]
+    },
+      {
+      "id": 2,
+      "name": "Three-Headed Guardian Beast",
+      "images": [
+        "https://static.wikia.nocookie.net/naruto/images/7/79/Three-Heads_after_release.png/revision/latest/scale-to-width-down/300?cb=20120303155347"
+      ],
+      "personal": {
+        "affiliation": "Yumegakure"
+      }
+
+      ...
+```
+
+We believe that the Naruto API has the potential to be an invaluable resource for the Naruto community, and we are committed to maintaining and improving it over time. We have spent months collecting information about every single character from multiple sources, making NarutoDB the most extensive public API for the Naruto universe. However, hosting and maintaining the API can be expensive, and that's why we need your support.
+
+If you find the Naruto API useful and want to support our mission, there are several ways you can do so:
+
+- **Star our GitHub repository:** By starring our [repository](https://github.com/hellskater/narutodb-website), you can show your support for the Naruto API and help us reach a wider audience.
+- **Contribute to the Naruto API:** If you have programming skills or knowledge about the Naruto universe, you can contribute to the [Naruto DB](https://github.com/hellskater/narutodb-website) by submitting bug reports, feature requests, or even code contributions. We welcome contributions from the Naruto community, and we believe that by working together, we can make the Naruto API the ultimate resource for Naruto fans.
+- **Buy us a coffee:** If you appreciate the work we're doing with the Naruto API and want to support us financially, you can buy us a coffee through our [Buy Me a Coffee](https://www.buymeacoffee.com/srini53168) page. Your support will help us cover the costs of hosting and maintaining the Naruto API, and ensure that we can continue to provide this valuable resource to the Naruto community.
+
+We hope that you find the Naruto API useful in your explorations of the Naruto universe, and we look forward to your contributions and support. Together, we can make the Naruto API the ultimate resource for Naruto fans everywhere!

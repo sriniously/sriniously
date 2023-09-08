@@ -1,0 +1,154 @@
+---
+title: "Overcoming Axios Limitations in Service Workers"
+summary: "Overcome the limitation of Axios not working within Service Workers by using a custom Fetch adapter."
+publishedAt: "2023-07-31"
+image: /images/axios/1.png
+published: true
+---
+
+In this post, we are going to address an issue that's not widely documented: Axios, a widely-used HTTP client, does not work with Service Workers. We'll delve into the reasons behind this and provide a workaround for anyone facing the same issue.
+
+## Understanding the Problem
+
+Axios is a promise-based HTTP client for the browser and Node.js. It provides a single API for dealing with XMLHttpRequest and HTTP requests, which is great because it brings to the table a lot of powerful features like intercepting requests and responses, canceling requests, and transforming request and response data.
+
+Service Workers, on the other hand, are a web technology that provides a way to intercept and modify navigation and resource requests. They prove extremely useful in creating reliable and always accessible applications, even in offline mode.
+
+But there's a caveat - Axios, despite all its power, doesn't work inside a Service Worker. Why is that?
+
+## Why Axios Doesn't Work in Service Workers
+
+Axios makes use of XMLHttpRequest for making HTTP requests. But Service Workers operate on a different thread than the main browser thread and do not have access to the DOM. As a result, they lack access to the XMLHttpRequest.
+
+Instead, Service Workers use the Fetch API for handling network requests, which is why we can't use Axios in this context. This is where our workaround comes in!
+
+## The Workaround: Using a Fetch Adapter
+
+To overcome this limitation, we will create our own adapter using the Fetch API. This adapter will replace Axios's default adapter within the Service Worker's context.
+
+Let's start by setting up the Axios instances:
+
+```typescript
+import axios, { AxiosRequestConfig } from "axios";
+
+// Base URL for all requests
+const baseURL = process.env.BASE_URL;
+
+// Create an instance for public API calls
+const axiosPublicInstance = axios.create({
+  baseURL,
+});
+
+// Create an instance for authenticated API calls
+const axiosAuthInstance = axios.create({
+  baseURL,
+});
+```
+
+Here, we've created two Axios instances - one for public requests (`axiosPublicInstance`) and another for authenticated requests (`axiosAuthInstance`).
+
+For authenticated requests, we add an interceptor to inject the token into the headers:
+
+```typescript
+axiosAuthInstance.interceptors.request.use(
+  (config) => {
+    const token = process.env.AUTH_TOKEN;
+    if (token) {
+      config.headers["x-auth-token"] = token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+```
+
+Interceptors are functions that Axios calls during the request/response process. Here, we're using a request interceptor to insert the authentication token into the headers before Axios sends the request.
+
+Now let's implement our custom fetch adapter:
+
+```typescript
+const fetchAdapter = async (
+  method: string,
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig
+): Promise<any> => {
+  let headers: { [k: string]: any } = {};
+
+  // Copy headers from the Axios config to our headers object
+  if (config?.headers) {
+    headers = Object.fromEntries(Object.entries(config.headers));
+  }
+
+  // Initialize Fetch API options
+  const fetchOptions: RequestInit = {
+    method: method,
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    // Add data to the body if it's not a GET/HEAD request
+    body:
+      method !== "GET" && method !== "HEAD" && data
+        ? JSON.stringify(data)
+        : undefined,
+  };
+
+  // Make the request using the Fetch API
+  const response = await fetch(baseURL + url, fetchOptions);
+
+  // Process the response
+  let dataResponse;
+  const contentType = response.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    dataResponse = await response.json();
+  } else {
+    dataResponse = await response.text();
+  }
+
+  // Return a response object similar to Axios
+  return {
+    data: dataResponse,
+    status: response.status,
+    statusText: response.statusText,
+    headers: response.headers,
+    config: config,
+    request: response,
+  };
+};
+```
+
+In this function, we're initializing the headers and other options for our Fetch request. We're also processing the response to ensure it matches the format of an Axios response.
+
+Finally, we replace the Axios default adapter with our fetch adapter within the Service Worker's context:
+
+```typescript
+if (
+  "ServiceWorkerGlobalScope" in self &&
+  self instanceof ServiceWorkerGlobalScope
+) {
+  axiosPublicInstance.get = (url: string, config?: AxiosRequestConfig) =>
+    fetchAdapter("GET", url, undefined, config);
+  axiosPublicInstance.post = (
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig
+  ) => fetchAdapter("POST", url, data, config);
+  axiosAuthInstance.get = (url: string, config?: AxiosRequestConfig) =>
+    fetchAdapter("GET", url, undefined, config);
+  axios;
+
+  AuthInstance.post = (url: string, data?: any, config?: AxiosRequestConfig) =>
+    fetchAdapter("POST", url, data, config);
+}
+```
+
+We're using the `ServiceWorkerGlobalScope` property to check if we're in the Service Worker context. If we are, we replace the `.get` and `.post` methods on our Axios instances with calls to our fetch adapter.
+
+## Conclusion
+
+And that's it! We've managed to overcome the Axios limitation within Service Workers using the Fetch API. With this, you should now be able to use Axios for your requests while taking advantage of Service Worker capabilities.
+
+Do remember that this is a basic solution and can be improved and modified based on your project requirements. Happy coding!
