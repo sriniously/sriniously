@@ -43,7 +43,7 @@ const qualities = [
   },
   {
     text: "🌪️ Refactor Tornado",
-    subtext: "(Turning messy code into... a different kind of mess)",
+    subtext: "(Turning messy code into... a beautiful kind of mess)",
     initial: "hidden",
     animate: "visible",
   },
