@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     siteName: "Srini's Work",
     locale: "en-US",
     type: "website",
+    images: [
+      {
+        url: `${ROOT_DOMAIN}/og.jpg`,
+      },
+    ],
   },
   robots: {
     index: true,
@@ -27,6 +32,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@Srinu53168",
     creator: "@Srinu53168",
+    images: [
+      {
+        url: `${ROOT_DOMAIN}/og.jpg`,
+      },
+    ],
   },
 };
 
