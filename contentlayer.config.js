@@ -21,7 +21,7 @@ const computedFields = {
       description: doc.summary,
       image: doc.image
         ? `https://srini-dev.tech${doc.image}`
-        : `https://srini-dev.tech/og?title=${doc.title}`,
+        : `https://srini-dev.tech/og.jpg`,
       url: `https://srini-dev.tech/blog/${doc._raw.flattenedPath}`,
       author: {
         "@type": "Person",

@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   const ogImage = blog.image
     ? `https://srini-dev.tech${blog.image}`
-    : `https://srini-dev.tech/og?title=${blog.title}`;
+    : `https://srini-dev.tech/og.jpg`;
 
   return {
     title: blog.title,
