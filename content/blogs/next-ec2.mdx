@@ -24,9 +24,15 @@ Head over [here](https://nextjs.org/docs/api-reference/create-next-app) and set 
 
 Head over to [GitHub](https://github.com/), sign up/log in and create a new repository and copy the https link.
 
-![Screenshot 2022-11-15 at 4.44.27 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668510966917/YsgiBNm-3.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668510966917/YsgiBNm-3.png"
+  alt="github actions screenshot"
+/>
 
-![Screenshot 2022-11-15 at 4.43.51 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668510977858/EQGPlU5hI.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668510977858/EQGPlU5hI.png"
+  alt="github actions screenshot"
+/>
 
 Move inside your project folder and run these commands
 
@@ -56,30 +62,49 @@ Go to `Services -> EC2 -> Launch Instance`
 
 1. Type a name for your instance and select `Ubuntu` in AMI.
 
-![Screenshot 2022-11-15 at 5.03.02 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668512119686/g5_cemCv1.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512119686/g5_cemCv1.png"
+  alt="aws ec2 instance screenshot"
+/>
 
-2. Click on `create a new key pair`, type a name for your key pair and click on `Create key pair`.
+2. Click on `create a new key pair`, type a name for your key pair and click on `Create
+key pair`.
 
-![Screenshot 2022-11-15 at 5.08.29 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668512375463/6B_4j0M4k.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512375463/6B_4j0M4k.png"
+  alt="aws ec2 instance screenshot"
+/>
 **_Please don't lose your key pair file, or you won't able to access your instance_**
 
 3. In `Network Settings`, click on `Create security group` and check `Allow SSH` from `Anywhere`, `Allow HTTPS` and `Allow HTTP`.
 
-![Screenshot 2022-11-15 at 5.11.41 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668512632515/QsMPizKPJ.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512632515/QsMPizKPJ.png"
+  alt="aws ec2 instance screenshot"
+/>
 
 4. In `Network Settings`, click on `Edit`
 
-![Screenshot 2022-11-15 at 6.38.15 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668517706069/93r-fVoNN.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668517706069/93r-fVoNN.png"
+  alt="aws ec2 instance screenshot"
+/>
 
 Scroll to the bottom of `Network Settings` and click on `Add security group role`
 
-![Screenshot 2022-11-15 at 6.39.21 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668517860612/QhsqQ1NoK.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668517860612/QhsqQ1NoK.png"
+  alt="aws ec2 instance screenshot"
+/>
 
 In the new security group rule, in `Port range` type `3000`, in `Source` select `0.0.0.0/0`
 
 5. In `Configure storage`, create `20 GiB` of volume.
 
-![Screenshot 2022-11-15 at 5.14.43 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668512728915/KB4kmCIjH.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512728915/KB4kmCIjH.png"
+  alt="aws ec2 instance screenshot"
+/>
 
 That's it. Now click on `Launch instance`. And you have an instance running. 🚀
 
@@ -89,11 +114,17 @@ Now that we have our instance up and running, we need to get inside it to set up
 
 Go to `Services -> EC2 -> Instances` and click on your newly created instance.
 
-![Screenshot 2022-11-15 at 5.21.23 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668513098913/sgSrmHp-X.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668513098913/sgSrmHp-X.png"
+  alt="aws ec2 instance screenshot"
+/>
 
 Now copy your `Public IPv4 DNS` address, which we will use to log into our instance
 
-![Screenshot 2022-11-15 at 5.22.11 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668513248445/qYU-bqfak.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668513248445/qYU-bqfak.png"
+  alt="aws ec2 instance screenshot"
+/>
 
 **Note:** _If you are on a windows PC then skip the next few steps to log into the instance and checkout [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)_.
 
@@ -166,7 +197,10 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 Now if you run `free -h` in your shell you should be able to see something like
 
-![Screenshot 2022-11-15 at 6.07.54 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668515886811/BKtwuxuUc.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668515886811/BKtwuxuUc.png"
+  alt="linux shell screenshot"
+/>
 
 ### Configuring Nginx server
 
@@ -178,7 +212,7 @@ sudo nano /etc/nginx/conf.d/example.conf
 
 This will open a nano editor, paste the following content in it
 
-```
+```nginx
 server {
     listen 80;
     listen [::]:80;
@@ -207,20 +241,22 @@ Great! Now we have our Nginx setup, if the above command did not throw an error,
 
 Now, head over to your GitHub repo, click on `Actions` on the navbar, search for Node.js and click on `configure` on the `Node.js` workflow
 
-![Screenshot 2022-11-15 at 6.49.32 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668518530773/7vzY9y1ES.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668518530773/7vzY9y1ES.png"
+  alt="github actions screenshot"
+/>
 
 In the edit tab, paste the following content and click on `Start commit` -> `Commit new file`
 
-```
+```yml
 name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: [self-hosted, example]
 
     strategy:
@@ -229,18 +265,21 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci --legacy-peer-deps
-    - run: npm run build --if-present
-    - run: pm2 restart example
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci --legacy-peer-deps
+      - run: npm run build --if-present
+      - run: pm2 restart example
 ```
 
-![Screenshot 2022-11-15 at 6.57.09 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668518841152/sN2s29NNM.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668518841152/sN2s29NNM.png"
+  alt="github actions screenshot"
+/>
 
 Now in the root directory of your project in GitHub, you should have a `.github/workflows/node.js.yml` file
 
@@ -248,19 +287,31 @@ Great! Now let's configure a self-hosted runner which will push and deploy our c
 
 In your GitHub repo, go to `Settings` -> `Actions` -> `Runners` -> `New self-hosted runner`
 
-![Screenshot 2022-11-15 at 7.01.37 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668519108030/q8MKrUr59.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519108030/q8MKrUr59.png"
+  alt="github actions screenshot"
+/>
 
 Select `Linux` as runner image. And you should see the following screen
 
-![Screenshot 2022-11-15 at 7.03.54 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668519243662/LDFJhJmoL.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519243662/LDFJhJmoL.png"
+  alt="github actions screenshot"
+/>
 
 Copy, paste and run every command in the `Download` box, one by one in your SSH shell where you're connected to the EC2 instance. Your terminal should look something like
 
-![Screenshot 2022-11-15 at 7.07.26 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668519474180/3xvp-U3MF.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519474180/3xvp-U3MF.png"
+  alt="github actions screenshot"
+/>
 
 Now copy the 1st command from the `Configure` tab and paste it in terminal
 
-![Screenshot 2022-11-15 at 7.09.20 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668519572600/Gytdcjl5j.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519572600/Gytdcjl5j.png"
+  alt="github actions screenshot"
+/>
 
 A shell prompt should appear after that
 
@@ -270,7 +321,10 @@ A shell prompt should appear after that
 Enter any additional labels (ex. label-1,label-2): [press Enter to skip]` type "example"
 - `Enter name of work folder: [press Enter for _work]` press enter
 
-![Screenshot 2022-11-15 at 7.10.43 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668519811733/u3GQWtM2x.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519811733/u3GQWtM2x.png"
+  alt="shell screenshot"
+/>
 
 Then, paste the following commands
 
@@ -301,7 +355,10 @@ pm2 start npm --name "example" -- start
 
 Alright, now you should see something like this on your terminal
 
-![Screenshot 2022-11-15 at 7.28.17 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668520715183/Eqg9u93wj.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668520715183/Eqg9u93wj.png"
+  alt="shell screenshot"
+/>
 
 If you do, then GREAT!! Now, if you're ready to see some magic, copy the public dns address of you instance from your EC2 console, which should look something like `ec2-44-201-126-205.compute-1.amazonaws.com`.
 
@@ -317,7 +374,10 @@ So, in my case, the URL looks something like
 http://ec2-44-201-126-205.compute-1.amazonaws.com:3000/
 ```
 
-![Screenshot 2022-11-15 at 7.32.50 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1668521001253/MBL3KjWgc.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668521001253/MBL3KjWgc.png"
+  alt="web screenshot"
+/>
 
 If you see your app then CONGRATULATIONS!!! 🚀 We have made it.
 

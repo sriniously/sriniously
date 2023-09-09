@@ -28,7 +28,7 @@ To overcome this limitation, we will create our own adapter using the Fetch API.
 
 Let's start by setting up the Axios instances:
 
-```typescript
+```ts
 import axios, { AxiosRequestConfig } from "axios";
 
 // Base URL for all requests
@@ -49,7 +49,7 @@ Here, we've created two Axios instances - one for public requests (`axiosPublicI
 
 For authenticated requests, we add an interceptor to inject the token into the headers:
 
-```typescript
+```ts
 axiosAuthInstance.interceptors.request.use(
   (config) => {
     const token = process.env.AUTH_TOKEN;
@@ -68,7 +68,7 @@ Interceptors are functions that Axios calls during the request/response process.
 
 Now let's implement our custom fetch adapter:
 
-```typescript
+```ts
 const fetchAdapter = async (
   method: string,
   url: string,
@@ -124,7 +124,7 @@ In this function, we're initializing the headers and other options for our Fetch
 
 Finally, we replace the Axios default adapter with our fetch adapter within the Service Worker's context:
 
-```typescript
+```ts
 if (
   "ServiceWorkerGlobalScope" in self &&
   self instanceof ServiceWorkerGlobalScope

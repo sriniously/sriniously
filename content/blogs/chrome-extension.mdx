@@ -61,7 +61,7 @@ The event-driven nature of background scripts aligns perfectly with the JavaScri
 
 Here's an example of a background script:
 
-```javascript
+```js
 chrome.runtime.onInstalled.addListener(function () {
   console.log("Extension installed");
 });
@@ -81,7 +81,7 @@ Content scripts run in the context of web pages. They can listen for DOM events,
 
 Here's an example of a content script:
 
-```javascript
+```js
 document.body.style.backgroundColor = "purple";
 ```
 
@@ -93,7 +93,7 @@ The popup is the UI of your extension that users can interact with. It's an HTML
 
 Here's an example of a popup script:
 
-```javascript
+```js
 document.getElementById("button").addEventListener("click", function () {
   console.log("Button clicked");
 });
@@ -116,7 +116,7 @@ Popups and options pages are simply HTML documents with CSS and JavaScript. They
 Now that we have a little idea of what each component does, let's look at how they interact:
 
 - **Step 1**: When a webpage is loaded, any content scripts defined in the `manifest.json` file is injected into the page. These scripts can interact with the webpage's DOM and send messages to the background scripts. This happens through the `chrome.runtime.sendMessage` API.
-  ```javascript
+  ```js
   // content.js
   chrome.runtime.sendMessage({
     message: "page_loaded",
@@ -124,7 +124,7 @@ Now that we have a little idea of what each component does, let's look at how th
   });
   ```
 - **Step 2**: The background script, set up to listen for messages from the content scripts or the browser, receives this message. It can then perform any necessary actions, such as saving the data, sending a response back, or sending another message to the popup.
-  ```javascript
+  ```js
   // background.js
   chrome.runtime.onMessage.addListener(function (
     request,
@@ -138,7 +138,7 @@ Now that we have a little idea of what each component does, let's look at how th
   });
   ```
 - **Step 3**: If the user interacts with the extension's popup (e.g., clicking a button), the popup's scripts can also send and receive messages to/from the background scripts, providing interactivity and triggering actions in the background scripts.
-  ```javascript
+  ```js
   // popup.js
   document.getElementById("button").addEventListener("click", function () {
     chrome.runtime.sendMessage(
@@ -152,7 +152,10 @@ Now that we have a little idea of what each component does, let's look at how th
 
 The below diagram tries to visualize the component, APIs and the data flow between them:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1688728321583/39efd8c9-508c-43dc-9f39-6ad2ca20f70c.png align="center")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1688728321583/39efd8c9-508c-43dc-9f39-6ad2ca20f70c.png"
+  alt="Chrome Extension Dataflow"
+/>
 
 ### Message-passing model
 
@@ -314,7 +317,7 @@ Example:
 
 Then in your background script:
 
-```javascript
+```js
 chrome.action.onClicked.addListener((tab) => {
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
@@ -371,7 +374,7 @@ In Manifest V2, developers could dynamically execute code using methods like `ch
 
 Example:
 
-```javascript
+```js
 chrome.tabs.executeScript({
   code: 'document.body.style.backgroundColor = "red"',
 });
@@ -383,7 +386,7 @@ In Manifest V3, the ability to execute arbitrary strings of code was removed. De
 
 Example:
 
-```javascript
+```js
 chrome.scripting.executeScript({
   target: { tabId: tab.id },
   files: ["changeBackground.js"],
@@ -404,7 +407,7 @@ In Manifest V2, developers could use the `chrome.webRequest` API to intercept ne
 
 Example:
 
-```javascript
+```js
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
     return { cancel: true };
@@ -457,7 +460,7 @@ In Manifest V2, content scripts ran in an "isolated world" within the page's env
 
 Example:
 
-```javascript
+```js
 var divs = document.querySelectorAll("div");
 console.log(divs.length);
 ```
@@ -468,7 +471,7 @@ In Manifest V3, the new `chrome.scripting` API provides a more explicit way to e
 
 Example:
 
-```javascript
+```js
 chrome.scripting.executeScript({
   target: { tabId: tab.id },
   function: () => {

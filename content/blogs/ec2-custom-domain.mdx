@@ -16,15 +16,24 @@ In order to redirect our app to a particular domain we need to make some changes
 
 So, head over to your EC2 instance and copy the public IP.
 
-![Screenshot 2022-11-22 at 8.24.05 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1669128884448/ybPfNUfqc.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669128884448/ybPfNUfqc.png"
+  alt="aws screenshot"
+/>
 
 Now open your DNS provider settings, if you want to redirect the app to your root domain, which should be something like `example.com`, then add an `A` record with `Name` as `@` and value as your EC2 public IP, e.g. `44.202.61.146`.
 
-![Screenshot 2022-11-22 at 8.30.26 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1669129242035/YARZ_Pm-D.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669129242035/YARZ_Pm-D.png"
+  alt="dns screenshot"
+/>
 
 But, if you want to redirect the app to a sub-domain, which we'll be doing in this article, then add an `A` record with `Name` as your sub-domain name, like `<YOUR-DESIRED-SUB-DOMAIN>`, which in our case will be `example` and value as your EC2 public IP, e.g. `44.202.61.146`.
 
-![Screenshot 2022-11-22 at 8.34.35 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1669129484527/571II-YvQ.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669129484527/571II-YvQ.png"
+  alt="dns screenshot"
+/>
 
 That's it from the DNS side. Since my domain is `srini-dev.tech`, this will create a sub-domain `example.srini-dev.tech`, which points to our EC2 instance.
 
@@ -32,7 +41,7 @@ That's it from the DNS side. Since my domain is `srini-dev.tech`, this will crea
 
 In previous article, our Nginx configuration file `example.conf` looked something like
 
-```
+```nginx
 server {
     listen 80;
     listen [::]:80;
@@ -45,12 +54,11 @@ location / {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
-
 ```
 
 Now we just need to add one more field called `server_name` in the config file to redirect our app to our domain `example.srini-dev.tech`
 
-```
+```nginx
 server {
     listen 80;
     listen [::]:80;
@@ -64,7 +72,6 @@ location / {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
-
 ```
 
 Great! Now if you open your domain, which should look something like `http://<YOUR-DOMAIN>`, which in my case is `http://example.srini-dev.tech`, in the browser, you should see your app.
@@ -84,6 +91,9 @@ This should open a prompt where it will ask your email address for the SSL certi
 
 Congratulations!! if you head over to your domain now, you should see `https`
 
-![Screenshot 2022-11-22 at 9.18.30 PM.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1669132120832/vZoRVzz8q.png align="left")
+<Image
+  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669132120832/vZoRVzz8q.png"
+  alt="https screenshot"
+/>
 
 ## Thanks for reading.
