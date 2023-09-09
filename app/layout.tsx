@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Header from "@/components/header";
 import { ROOT_DOMAIN } from "@/lib/constants";
+import Footer from "@/components/footer";
 
 const ysabeau = localFont({
   src: [
@@ -70,6 +71,7 @@ export default function RootLayout({
       <body>
         <Header />
         <main className="min-h-screen">{children}</main>
+        <Footer />
       </body>
     </html>
   );
