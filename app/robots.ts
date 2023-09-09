@@ -1,3 +1,5 @@
+import { ROOT_DOMAIN } from "@/lib/constants";
+
 export default function robots() {
   return {
     rules: [
@@ -5,7 +7,7 @@ export default function robots() {
         userAgent: "*",
       },
     ],
-    sitemap: "https://srini-dev.tech/sitemap.xml",
-    host: "https://srini-dev.tech",
+    sitemap: `${ROOT_DOMAIN}/sitemap.xml`,
+    host: ROOT_DOMAIN,
   };
 }

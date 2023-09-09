@@ -1,3 +1,4 @@
+import { ROOT_DOMAIN } from "@/lib/constants";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Srini's Work",
     description: "Things I've worked on and built.",
-    url: "https://srini-dev.tech/work",
+    url: `${ROOT_DOMAIN}/work`,
     siteName: "Srini's Work",
     locale: "en-US",
     type: "website",

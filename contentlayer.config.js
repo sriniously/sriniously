@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { ROOT_DOMAIN } from "./lib/constants";
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -19,10 +20,8 @@ const computedFields = {
       datePublished: doc.publishedAt,
       dateModified: doc.publishedAt,
       description: doc.summary,
-      image: doc.image
-        ? `https://srini-dev.tech${doc.image}`
-        : `https://srini-dev.tech/og.jpg`,
-      url: `https://srini-dev.tech/blog/${doc._raw.flattenedPath}`,
+      image: doc.image ? `${ROOT_DOMAIN}${doc.image}` : `${ROOT_DOMAIN}/og.jpg`,
+      url: `${ROOT_DOMAIN}/blog/${doc._raw.flattenedPath}`,
       author: {
         "@type": "Person",
         name: "K Srinivas Rao",

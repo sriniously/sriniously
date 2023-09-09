@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Header from "@/components/header";
+import { ROOT_DOMAIN } from "@/lib/constants";
 
 const ysabeau = localFont({
   src: [
@@ -21,7 +22,7 @@ const ysabeau = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://srini-dev.tech"),
+  metadataBase: new URL(ROOT_DOMAIN),
   title: {
     default: "K Srinivas Rao",
     template: "%s | K Srinivas Rao",
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "K Srinivas Rao",
     description: "Pixels, Punches, Plot Twists",
-    url: "https://srini-dev.tech",
+    url: ROOT_DOMAIN,
     siteName: "K Srinivas Rao",
     locale: "en-US",
     type: "website",

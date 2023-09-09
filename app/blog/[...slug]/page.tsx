@@ -11,6 +11,7 @@ import Link from "next/link";
 
 import { cn, formatDate } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { ROOT_DOMAIN } from "@/lib/constants";
 
 interface BlogPageProps {
   params: {
@@ -39,8 +40,8 @@ export async function generateMetadata({
   }
 
   const ogImage = blog.image
-    ? `https://srini-dev.tech${blog.image}`
-    : `https://srini-dev.tech/og.jpg`;
+    ? `${ROOT_DOMAIN}${blog.image}`
+    : `${ROOT_DOMAIN}/og.jpg`;
 
   return {
     title: blog.title,
@@ -54,7 +55,7 @@ export async function generateMetadata({
       title: blog.title,
       description: blog.summary,
       type: "article",
-      url: `https://srini-dev.tech/blog/${blog.slug}`,
+      url: `${ROOT_DOMAIN}/blog/${blog.slug}`,
       images: [
         {
           url: ogImage,

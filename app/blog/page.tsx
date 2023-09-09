@@ -1,4 +1,5 @@
 import BlogCard from "@/components/blog/blog-card";
+import { ROOT_DOMAIN } from "@/lib/constants";
 import { allBlogs } from "contentlayer/generated";
 import { Metadata } from "next";
 
@@ -8,13 +9,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Srini's Blog",
     description: "Dive deep into my thoughts and experiences.",
-    url: "https://srini-dev.tech/blog",
+    url: `${ROOT_DOMAIN}/blog`,
     siteName: "Srini's Blog",
     locale: "en-US",
     type: "website",
     images: [
       {
-        url: "https://srini-dev.tech/og.jpg",
+        url: `${ROOT_DOMAIN}/og.jpg`,
       },
     ],
   },
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     creator: "@Srinu53168",
     images: [
       {
-        url: "https://srini-dev.tech/og.jpg",
+        url: `${ROOT_DOMAIN}/og.jpg`,
       },
     ],
   },
