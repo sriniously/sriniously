@@ -89,7 +89,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
   }
 
   return (
-    <article className="container relative max-w-3xl py-6 lg:py-10">
+    <article className="lg:container relative w-full lg:max-w-3xl py-6 lg:py-10">
       <Link
         href="/blog"
         className={cn(
