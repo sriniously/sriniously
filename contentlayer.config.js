@@ -9,7 +9,7 @@ import { ROOT_DOMAIN } from "./lib/constants";
 const computedFields = {
   slug: {
     type: "string",
-    resolve: (doc) => doc._raw.flattenedPath,
+    resolve: (doc) => doc._raw.flattenedPath.split("/").pop(),
   },
   structuredData: {
     type: "object",
@@ -21,7 +21,7 @@ const computedFields = {
       dateModified: doc.publishedAt,
       description: doc.summary,
       image: doc.image ? `${ROOT_DOMAIN}${doc.image}` : `${ROOT_DOMAIN}/og.jpg`,
-      url: `${ROOT_DOMAIN}/blog/${doc._raw.flattenedPath}`,
+      url: `${ROOT_DOMAIN}/blog/${doc._raw.flattenedPath.split("/").pop()}`,
       author: {
         "@type": "Person",
         name: "K Srinivas Rao",
