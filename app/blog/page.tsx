@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     siteName: "Srini's Blog",
     locale: "en-US",
     type: "website",
+    images: [
+      {
+        url: "https://srini-dev.tech/og.jpg",
+      },
+    ],
   },
   robots: {
     index: true,
@@ -28,6 +33,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@Srinu53168",
     creator: "@Srinu53168",
+    images: [
+      {
+        url: "https://srini-dev.tech/og.jpg",
+      },
+    ],
   },
 };
 
