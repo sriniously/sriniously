@@ -5,6 +5,30 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Blog",
   description: "Dive deep into my thoughts and experiences.",
+  openGraph: {
+    title: "Srini's Blog",
+    description: "Dive deep into my thoughts and experiences.",
+    url: "https://srini-dev.tech/blog",
+    siteName: "Srini's Blog",
+    locale: "en-US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@Srinu53168",
+    creator: "@Srinu53168",
+  },
 };
 
 export default async function BlogPage() {
