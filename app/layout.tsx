@@ -25,15 +25,15 @@ const ysabeau = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(ROOT_DOMAIN),
   title: {
-    default: "K Srinivas Rao",
-    template: "%s | K Srinivas Rao",
+    default: "Sriniously | K Srinivas Rao",
+    template: "%s | Sriniously",
   },
   description: "Pixels, Punches, Plot Twists",
   openGraph: {
-    title: "K Srinivas Rao",
+    title: "Sriniously | K Srinivas Rao",
     description: "Pixels, Punches, Plot Twists",
     url: ROOT_DOMAIN,
-    siteName: "K Srinivas Rao",
+    siteName: "Sriniously",
     locale: "en-US",
     type: "website",
   },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "K Srinivas Rao",
+    title: "Sriniously | K Srinivas Rao",
     card: "summary_large_image",
     site: "@Srinu53168",
     creator: "@Srinu53168",
