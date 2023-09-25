@@ -6,11 +6,9 @@ image: /images/secure-css/1.webp
 published: true
 ---
 
-# Secure CSS in React Applications: A Comprehensive Guide
-
 In the vast expanse of web development, the influential role of Cascading Style Sheets (CSS) is undeniable. Despite its pervasive use, potential security risks lurk in the shadows of CSS, often overlooked by developers. This comprehensive guide seeks to illuminate these potential pitfalls and offers robust strategies for enhancing security when writing CSS for React applications.
 
-## Unveiling the Risk: A Scenario 
+## Unveiling the Risk: A Scenario
 
 Consider Alex, a developer working on a React-based e-commerce platform. As the site expands, separating the interface and styling for customers and admins becomes a necessity. In the pursuit of efficiency, Alex opts to consolidate all styles into a single CSS file, unintentionally exposing potential security vulnerabilities.
 
@@ -54,20 +52,16 @@ Descriptive selector names leak insights into the web application’s functional
 In React, you can utilize Hooks to manage access levels and serve CSS files accordingly.
 
 ```javascript
-import React from 'react';
-import adminStyles from './adminStyling.module.scss';
-import customerStyles from './customerStyling.module.scss';
+import React from "react";
+import adminStyles from "./adminStyling.module.scss";
+import customerStyles from "./customerStyling.module.scss";
 
 function App() {
-  const [role, setRole] = React.useState('customer'); // default role
-  
-  const styles = role === 'admin' ? adminStyles : customerStyles;
-  
-  return (
-    <div className={styles.container}>
-      {/* Other components */}
-    </div>
-  );
+  const [role, setRole] = React.useState("customer"); // default role
+
+  const styles = role === "admin" ? adminStyles : customerStyles;
+
+  return <div className={styles.container}>{/* Other components */}</div>;
 }
 
 export default App;
@@ -91,20 +85,16 @@ Obfuscate class names and selectors to deter attackers. In a React application, 
 }
 ```
 
-### Defense Mechanism #3: Employing CSS Libraries 
+### Defense Mechanism #3: Employing CSS Libraries
 
 Implement CSS libraries like Tailwind CSS to reduce the need for descriptive selectors.
 
 ```javascript
 // Using Tailwind CSS in React
-import 'tailwindcss/tailwind.css';
+import "tailwindcss/tailwind.css";
 
 function Component() {
-  return (
-    <div className="bg-blue-500 text-white">
-      {/* Content */}
-    </div>
-  );
+  return <div className="bg-blue-500 text-white">{/* Content */}</div>;
 }
 ```
 
