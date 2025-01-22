@@ -7,7 +7,7 @@ const items = [
     header: (
       <img
         src="https://m.media-amazon.com/images/I/61HWZsE5YNL._SL1500_.jpg"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -17,7 +17,7 @@ const items = [
     header: (
       <img
         src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -27,7 +27,7 @@ const items = [
     header: (
       <img
         src="https://m.media-amazon.com/images/I/71LsLeeBhAL._SL1500_.jpg"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },

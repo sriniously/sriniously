@@ -7,7 +7,7 @@ const items = [
     header: (
       <img
         src="https://m.media-amazon.com/images/I/61jup8h--XL._SL1500_.jpg"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -17,7 +17,7 @@ const items = [
     header: (
       <img
         src="https://m.media-amazon.com/images/I/71EstOZXAlL._SL1500_.jpg"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -27,7 +27,7 @@ const items = [
     header: (
       <img
         src="https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/h/g/m/-original-imagqbqruzhemgze.jpeg?q=70&crop=false"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -37,7 +37,7 @@ const items = [
     header: (
       <img
         src="https://rukminim2.flixcart.com/image/416/416/ks0onm80/monitor/w/6/6/ha270-um-hw0si-a01-acer-original-imag5zjnk4yad4uz.jpeg?q=70&crop=false"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -47,7 +47,47 @@ const items = [
     header: (
       <img
         src="https://keychron.in/wp-content/uploads/2023/02/Keychron-K2-Pro-QMK-VIA-Wireless-Mechanical-Keyboard-for-Mac-Windows-PBT-keycaps-PCB-screw-in-stabilizer-hot-swappable-brown-switch_451c4c14-fbf8-4dc1-bc4b-0a3ba01e4586_540x-520x520.jpg"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
+      />
+    ),
+  },
+  {
+    title: "UPS 1100VA/660W",
+    link: "https://www.amazon.in/APC-BX1100C-1100VA-230V-Back/dp/B01ELNPG2I/ref=sr_1_4?crid=1K3HOHL7BSTN8&dib=eyJ2IjoiMSJ9.AhMoK2ifAFBEiUYyV18gJHUUyeQIQobVqKdVBn8Dd1fG210_p3OIZ6FeBcbHxw_4nxSPP6EJo50990z5cPQAk3vvOe_W8PP5Ej1oru1ghr2fH5HjuQL576x1X9MTAo0XrHYb1grHmNqvPJ6L49JgV3QeYkueKiII1Qffx9ZkOLDkczNZX13MgwcgFw0bUPi1zr_213oZAeCMcvzhbvFyf-J6SrCM31WYJwqCMqMXjdY2fhvkd-Jzw8xkLe_dUulJ51mq-85zNm4-vydcoeBPRiq0S29Z2fpi1iJK_B1IbulCmVw9OG89kanLv-WXkQke8gDkUejQBglYatv1MJlgMVsFagD9NC3ILZf3kKJI1as.l3jmzdOlIGapAW6l-rZTOqH6Z76xyXc8CwfnJo8xTdo&dib_tag=se&keywords=ups&qid=1737549007&s=computers&sprefix=ups%2Ccomputers%2C220&sr=1-4",
+    header: (
+      <img
+        src="https://m.media-amazon.com/images/I/51PIIdmOSLL._SL1500_.jpg"
+        className="w-full h-full object-contain"
+      />
+    ),
+  },
+  {
+    title: "UPS 600VA/360W",
+    link: "https://www.amazon.in/APC-BX600C-600VA-230V-Back/dp/B016XVRKZM/ref=sr_1_3?crid=1K3HOHL7BSTN8&dib=eyJ2IjoiMSJ9.AhMoK2ifAFBEiUYyV18gJHUUyeQIQobVqKdVBn8Dd1fG210_p3OIZ6FeBcbHxw_4nxSPP6EJo50990z5cPQAk3vvOe_W8PP5Ej1oru1ghr2fH5HjuQL576x1X9MTAo0XrHYb1grHmNqvPJ6L49JgV3QeYkueKiII1Qffx9ZkOLDkczNZX13MgwcgFw0bUPi1zr_213oZAeCMcvzhbvFyf-J6SrCM31WYJwqCMqMXjdY2fhvkd-Jzw8xkLe_dUulJ51mq-85zNm4-vydcoeBPRiq0S29Z2fpi1iJK_B1IbulCmVw9OG89kanLv-WXkQke8gDkUejQBglYatv1MJlgMVsFagD9NC3ILZf3kKJI1as.l3jmzdOlIGapAW6l-rZTOqH6Z76xyXc8CwfnJo8xTdo&dib_tag=se&keywords=ups&qid=1737549007&s=computers&sprefix=ups%2Ccomputers%2C220&sr=1-3",
+    header: (
+      <img
+        src="https://m.media-amazon.com/images/I/51+xYuXifNL._SL1500_.jpg"
+        className="w-full h-full object-contain"
+      />
+    ),
+  },
+  {
+    title: "Logitech B170",
+    link: "https://www.amazon.in/Logitech-B170-Wireless-Mouse-Black/dp/B01J0XWYKQ/ref=sr_1_3?crid=3B6CGTR6H09C2&dib=eyJ2IjoiMSJ9.mFhYhXYHNqB8lOrPQC8zaOi0vLdYtw04ePm149nCMnDHq9_azYbQVezfefFjjqH58nN_y0cEGGX7LlfuKC8INl2p5Z4P1oTwlc-h1DG7pvEe94h8waDVk_Ytu04iI6WQq7n9qvYI-wGftx6_4wRzFSWFCNHzMsUVFu1C_WNglQpHoGpcGNQKqmHJWgymEL1zNC1AoHrrxNf4_HYcik0NPPX_-6QUSMiUonzz_tmc9tjAtEb87Ko-EiBXCS9u8ZKiZGHtiryr2xd0IA2Q-OAG9sJz3nFIAiPsYb1tE7UInN4LCTFRDM_QKAmQ7NX5W6ghgka-_B_E2NpHHX3Dl6h2TEjk7QUCWoNrtOMYBFkXS14.5KbhsM_8wV4PippJNd_liWFX_7Kg6vfghjn7RKVFtVI&dib_tag=se&keywords=Logitech%2BB170&nsdOptOutParam=true&qid=1737549457&s=computers&sprefix=logitech%2Bb170%2Ccomputers%2C213&sr=1-3&th=1",
+    header: (
+      <img
+        src="https://m.media-amazon.com/images/I/51uCYJqDrML._SL1500_.jpg"
+        className="w-full h-full object-contain"
+      />
+    ),
+  },
+  {
+    title: "External Hard Disk 2TB",
+    link: "https://www.amazon.in/gp/product/B07VTGBWYH?th=1",
+    header: (
+      <img
+        src="https://m.media-amazon.com/images/I/71JM4o97HjS._SL1500_.jpg"
+        className="w-full h-full object-contain"
       />
     ),
   },

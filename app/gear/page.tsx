@@ -1,6 +1,7 @@
 import AudioGrid from "./grids/audio";
 import DevelopmentGrid from "./grids/development";
 import EnginesGrid from "./grids/engines";
+import GamingGrid from "./grids/gaming";
 import MiscGrid from "./grids/misc";
 
 export default function Gear() {
@@ -9,6 +10,7 @@ export default function Gear() {
       <DevelopmentGrid />
       <AudioGrid />
       <EnginesGrid />
+      <GamingGrid />
       <MiscGrid />
     </div>
   );

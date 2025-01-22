@@ -7,7 +7,17 @@ const items = [
     header: (
       <img
         src="https://avatars.githubusercontent.com/u/169223740?s=200&v=4"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
+      />
+    ),
+  },
+  {
+    title: "Tmux",
+    link: "https://github.com/tmux/tmux/wiki",
+    header: (
+      <img
+        src="https://www.cdnlogo.com/logos/t/93/tmux.svg"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -17,7 +27,7 @@ const items = [
     header: (
       <img
         src="https://code.visualstudio.com/assets/images/code-stable.png"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -27,7 +37,7 @@ const items = [
     header: (
       <img
         src="https://avatars.githubusercontent.com/u/126759922?v=4"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -38,7 +48,7 @@ const items = [
     header: (
       <img
         src="https://w7.pngwing.com/pngs/286/446/png-transparent-burp-suite-macos-bigsur-icon-thumbnail.png"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -48,7 +58,7 @@ const items = [
     header: (
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsQKJrkgkZqkkVUXnYdqATpo6PjVWKG8N1GA&s"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },
@@ -58,7 +68,7 @@ const items = [
     header: (
       <img
         src="https://orbstack.dev/img/icon256.png"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     ),
   },

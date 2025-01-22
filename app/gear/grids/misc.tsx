@@ -7,7 +7,17 @@ const items = [
     header: (
       <img
         src="https://m.media-amazon.com/images/I/61CYV-pyToL._SL1500_.jpg500_.jpg"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
+      />
+    ),
+  },
+  {
+    title: "Logitech C270",
+    link: "https://www.amazon.in/Logitech-Widescreen-Correction-Noise-Reducing-FaceTime/dp/B008QS9J6Y/ref=sr_1_2?crid=22EIXUBVGBU8V&dib=eyJ2IjoiMSJ9.OBBWppirX52sRs2Qom8EUUO0scXDuE4-y1N4XJu7qaLTqmSwHhGvQmgGWkkgIA5rVd0NvP62CLWhSsLLA4DYNFaojQahiff5FxQqOYp5QJPWWrzxx5jbI8yaZYiS_WcH4ygw_bUzI7zRNMKaiYlbkwEgjgjbDKWztHbh80wxKDA23epMSjJKVqHlwa2eRBZ7kQb452jDZo_kOueKCycmnOvm6rzBOYTBRLybQZ9BmKzh4oVtdhCEgS8Vx82uWY1UgCs5TtdR-3AyMgtTCr_1LKPuVUCdal07dYDGIkc0Lgz9mt_cLfsXCJBdJPh3_nSCUdaHYs7VTkdXsNCBu7bLJIhzc6dE0c0zgKfUZbuGLFo.yGFfmDbE_wrXDd1lpZD6PnrrpL_KVsu_sZGAdcP32Hs&dib_tag=se&keywords=Logitech%2BC270&nsdOptOutParam=true&qid=1737548907&s=computers&sprefix=logitech%2Bc270%2Ccomputers%2C213&sr=1-2&th=1",
+    header: (
+      <img
+        src="https://m.media-amazon.com/images/I/51BmSwjFu5L._SL1281_.jpg"
+        className="w-full h-full object-contain"
       />
     ),
   },
