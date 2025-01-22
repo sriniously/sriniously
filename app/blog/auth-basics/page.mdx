@@ -1,10 +1,14 @@
----
-title: "Authentication & Refresh token flow with Nextjs, Typescript, React Query and axios interceptors."
-summary: "In this post we're gonna implement the whole flow using nextjs, typescript, react query and axios interceptors."
-publishedAt: "2022-11-14"
-image: /images/auth-basic/1.jpeg
-published: true
----
+export const metadata = {
+  title:
+    "Authentication & Refresh token flow with Nextjs, Typescript, React Query and axios interceptors.",
+  description:
+    "In this post we're gonna implement the whole flow using nextjs, typescript, react query and axios interceptors.",
+  openGraph: {
+    images: "/images/auth-basic/1.jpeg",
+  },
+  publishedAt: "2022-11-14",
+  slug: "auth-basics",
+};
 
 # Authentication & Refresh token flow with Nextjs, Typescript, React Query and axios interceptors.
 
@@ -15,11 +19,6 @@ In this post we're gonna implement the whole flow using nextjs, typescript, reac
 ## What is rotating refresh token flow?
 
 We are not gonna go into too much depth here, there are already so many articles and resources out there explaining the theory. Here is a simple illustration by [_SuperTokens_](https://supertokens.com/) explaining the flow.
-
-<Image
-  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668356507131/KjSCe-70g.png"
-  alt="superTokens"
-/>
 
 So basically the flow goes something like this after user enters the credentials and hits the submit button
 

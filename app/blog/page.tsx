@@ -1,64 +1,69 @@
-import BlogCard from "@/components/blog/blog-card";
-import { ROOT_DOMAIN } from "@/lib/constants";
-import { allBlogs } from "contentlayer/generated";
-import { Metadata } from "next";
+import { promises as fs } from "fs";
+import path from "path";
+import Link from "next/link";
+import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Dive deep into my thoughts and experiences.",
-  openGraph: {
-    title: "Srini's Blog",
-    description: "Dive deep into my thoughts and experiences.",
-    url: `${ROOT_DOMAIN}/blog`,
-    siteName: "Srini's Blog",
-    locale: "en-US",
-    type: "website",
-    images: [
-      {
-        url: `${ROOT_DOMAIN}/og.jpg`,
-      },
-    ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@Srinu53168",
-    creator: "@Srinu53168",
-    images: [
-      {
-        url: `${ROOT_DOMAIN}/og.jpg`,
-      },
-    ],
-  },
-};
+interface BlogMetadata {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+}
 
-export default async function BlogPage() {
-  const blogs = allBlogs
-    .filter((post) => post.published)
-    .sort((a, b) => {
-      if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-        return -1;
+async function getBlogMetadatas(): Promise<BlogMetadata[]> {
+  const blogDir = path.join(process.cwd(), "app", "blog");
+  const entries = await fs.readdir(blogDir, { withFileTypes: true });
+
+  const metadataPromises = entries
+    .filter((entry) => entry.isDirectory())
+    .map(async (entry) => {
+      const slug = entry.name;
+      const pagePath = path.join(blogDir, slug, "page.mdx");
+
+      try {
+        await fs.access(pagePath);
+        const { metadata } = await import(`@/app/blog/${slug}/page.mdx`);
+
+        return {
+          slug,
+          title: metadata.title || "Untitled",
+          date: metadata.publishedAt || "No date",
+          description: metadata.description || "No description",
+        };
+      } catch (error) {
+        console.error(`Error processing ${slug}: ${error}`);
+        return null;
       }
-      return 1;
     });
 
-  return (
-    <section>
-      <h1 className="font-bold text-2xl mb-10">my blog</h1>
+  const metadatas = await Promise.all(metadataPromises);
+  return metadatas
+    .filter((metadata): metadata is BlogMetadata => metadata !== null)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
 
-      {blogs.map((blog) => (
-        <BlogCard key={blog._id} blog={blog} />
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export default async function Blog() {
+  const blogMetadatas = await getBlogMetadatas();
+
+  return (
+    <div className="pb-20 flex flex-col gap-10">
+      {blogMetadatas.map((post) => (
+        <Link href={`/blog/${post.slug}`} className="group" key={post.slug}>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2 group-hover:underline underline-offset-4">
+            {post.title}
+          </h2>
+          <p className="text-gray-600 mb-2">{post.description}</p>
+          <p className="text-sm text-gray-500">{formatDate(post.date)}</p>
+        </Link>
       ))}
-    </section>
+    </div>
   );
 }

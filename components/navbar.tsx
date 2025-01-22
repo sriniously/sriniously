@@ -19,14 +19,19 @@ const Navbar = () => {
 
   return (
     <nav>
-      <ul className="flex items-center gap-3 py-10 text-lg">
+      <ul className="flex items-center gap-3 py-5 text-lg">
         {links.map(({ href, label }) => {
+          const isActive =
+            pathname.includes("/blog/") && href.includes("/blog")
+              ? pathname.includes(href)
+              : pathname === href;
+
           return (
             <Link href={href} key={href}>
               <li
                 className={`
                 ${
-                  pathname === href
+                  isActive
                     ? "text-foreground font-bold"
                     : "text-gray-500 hover:text-foreground transition-colors duration-200"
                 }

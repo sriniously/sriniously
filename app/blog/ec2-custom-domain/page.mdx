@@ -1,10 +1,15 @@
----
-title: "Adding custom domain to EC2 instance with NGINX"
-summary: "In this article, we will learn how to add a custom domain to our EC2 instance with NGINX"
-publishedAt: "2022-11-22"
-image: /images/ec2-custom-domain/1.png
-published: true
----
+import Image from "next/image";
+
+export const metadata = {
+  title: "Adding custom domain to EC2 instance with NGINX",
+  description:
+    "In this article, we will learn how to add a custom domain to our EC2 instance with NGINX",
+  openGraph: {
+    images: "/images/ec2-custom-domain/1.png",
+  },
+  publishedAt: "2022-11-22",
+  slug: "ec2-custom-domain",
+};
 
 # Adding custom domain to EC2 instance with NGINX
 
@@ -19,6 +24,8 @@ So, head over to your EC2 instance and copy the public IP.
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669128884448/ybPfNUfqc.png"
   alt="aws screenshot"
+  width={1000}
+  height={1000}
 />
 
 Now open your DNS provider settings, if you want to redirect the app to your root domain, which should be something like `example.com`, then add an `A` record with `Name` as `@` and value as your EC2 public IP, e.g. `44.202.61.146`.
@@ -26,6 +33,8 @@ Now open your DNS provider settings, if you want to redirect the app to your roo
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669129242035/YARZ_Pm-D.png"
   alt="dns screenshot"
+  width={1000}
+  height={1000}
 />
 
 But, if you want to redirect the app to a sub-domain, which we'll be doing in this article, then add an `A` record with `Name` as your sub-domain name, like `<YOUR-DESIRED-SUB-DOMAIN>`, which in our case will be `example` and value as your EC2 public IP, e.g. `44.202.61.146`.
@@ -33,6 +42,8 @@ But, if you want to redirect the app to a sub-domain, which we'll be doing in th
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669129484527/571II-YvQ.png"
   alt="dns screenshot"
+  width={1000}
+  height={1000}
 />
 
 That's it from the DNS side. Since my domain is `srini-dev.tech`, this will create a sub-domain `example.srini-dev.tech`, which points to our EC2 instance.
@@ -94,6 +105,8 @@ Congratulations!! if you head over to your domain now, you should see `https`
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1669132120832/vZoRVzz8q.png"
   alt="https screenshot"
+  width={1000}
+  height={1000}
 />
 
 ## Thanks for reading.

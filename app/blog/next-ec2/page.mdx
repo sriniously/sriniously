@@ -1,22 +1,21 @@
----
-title: "Deploying a Next app to AWS EC2 with GitHub actions CI/CD"
-summary: "In this article, we will go through the steps to deploy a Next app to AWS EC2 with GitHub actions CI/CD"
-publishedAt: "2022-11-15"
-image: /images/next-ec2/1.png
-published: true
----
+import Image from "next/image";
+
+export const metadata = {
+  title: "Deploying a Next app to AWS EC2 with GitHub actions CI/CD",
+  description:
+    "In this article, we will go through the steps to deploy a Next app to AWS EC2 with GitHub actions CI/CD",
+  openGraph: {
+    images: "/images/next-ec2/1.png",
+  },
+  publishedAt: "2022-11-15",
+  slug: "next-ec2",
+};
 
 # Deploying a Next app to AWS EC2 with GitHub actions CI/CD
 
 First of all, there are plenty of other _easy_ and _faster_ ways to deploy your next app, like [Vercel](https://vercel.com/) and [Netlify](https://www.netlify.com/), where you can get it up and running in a matter of seconds. So if it's a personal project or a small one, feel free to try those out.
 
 If you're still here and you want to deploy your own app end to end yourself, in your own managed server in AWS, then let's jump right into the code 🚀. We'll go through every single step until our app is online.
-
-<Callout type="note">
-  I will be using a Mac machine for this tutorial, there won't be much
-  difference if you are on Windows, I'll mention some links to other articles if
-  some of the steps are different.
-</Callout>
 
 ## Creating the Next project
 
@@ -31,11 +30,15 @@ Head over to [GitHub](https://github.com/), sign up/log in and create a new repo
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668510966917/YsgiBNm-3.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668510977858/EQGPlU5hI.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 Move inside your project folder and run these commands
@@ -69,6 +72,8 @@ Go to `Services -> EC2 -> Launch Instance`
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512119686/g5_cemCv1.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 
 2. Click on `create a new key pair`, type a name for your key pair and click on `Create
@@ -77,6 +82,8 @@ key pair`.
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512375463/6B_4j0M4k.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 **_Please don't lose your key pair file, or you won't able to access your instance_**
 
@@ -85,6 +92,8 @@ key pair`.
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512632515/QsMPizKPJ.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 
 4. In `Network Settings`, click on `Edit`
@@ -92,6 +101,8 @@ key pair`.
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668517706069/93r-fVoNN.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 
 Scroll to the bottom of `Network Settings` and click on `Add security group role`
@@ -99,6 +110,8 @@ Scroll to the bottom of `Network Settings` and click on `Add security group role
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668517860612/QhsqQ1NoK.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 
 In the new security group rule, in `Port range` type `3000`, in `Source` select `0.0.0.0/0`
@@ -108,6 +121,8 @@ In the new security group rule, in `Port range` type `3000`, in `Source` select 
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668512728915/KB4kmCIjH.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 
 That's it. Now click on `Launch instance`. And you have an instance running. 🚀
@@ -121,6 +136,8 @@ Go to `Services -> EC2 -> Instances` and click on your newly created instance.
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668513098913/sgSrmHp-X.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 
 Now copy your `Public IPv4 DNS` address, which we will use to log into our instance
@@ -128,13 +145,13 @@ Now copy your `Public IPv4 DNS` address, which we will use to log into our insta
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668513248445/qYU-bqfak.png"
   alt="aws ec2 instance screenshot"
+  width={1000}
+  height={1000}
 />
 
-<Callout type="note">
-  If you are on a windows PC then skip the next few steps to log into the
-  instance and checkout
-  [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)
-</Callout>
+> If you are on a windows PC then skip the next few steps to log into the
+> instance and checkout
+> [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)
 
 Now, for **Mac** users, open your terminal and `cd` into the directory where you have downloaded your \<YOUR-KEY-NAME\>.pem, and type the following commands
 
@@ -208,6 +225,8 @@ Now if you run `free -h` in your shell you should be able to see something like
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668515886811/BKtwuxuUc.png"
   alt="linux shell screenshot"
+  width={1000}
+  height={1000}
 />
 
 ### Configuring Nginx server
@@ -252,6 +271,8 @@ Now, head over to your GitHub repo, click on `Actions` on the navbar, search for
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668518530773/7vzY9y1ES.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 In the edit tab, paste the following content and click on `Start commit` -> `Commit new file`
@@ -287,6 +308,8 @@ jobs:
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668518841152/sN2s29NNM.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 Now in the root directory of your project in GitHub, you should have a `.github/workflows/node.js.yml` file
@@ -298,6 +321,8 @@ In your GitHub repo, go to `Settings` -> `Actions` -> `Runners` -> `New self-hos
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519108030/q8MKrUr59.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 Select `Linux` as runner image. And you should see the following screen
@@ -305,6 +330,8 @@ Select `Linux` as runner image. And you should see the following screen
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519243662/LDFJhJmoL.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 Copy, paste and run every command in the `Download` box, one by one in your SSH shell where you're connected to the EC2 instance. Your terminal should look something like
@@ -312,6 +339,8 @@ Copy, paste and run every command in the `Download` box, one by one in your SSH 
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519474180/3xvp-U3MF.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 Now copy the 1st command from the `Configure` tab and paste it in terminal
@@ -319,6 +348,8 @@ Now copy the 1st command from the `Configure` tab and paste it in terminal
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519572600/Gytdcjl5j.png"
   alt="github actions screenshot"
+  width={1000}
+  height={1000}
 />
 
 A shell prompt should appear after that
@@ -332,6 +363,8 @@ Enter any additional labels (ex. label-1,label-2): [press Enter to skip]` type "
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668519811733/u3GQWtM2x.png"
   alt="shell screenshot"
+  width={1000}
+  height={1000}
 />
 
 Then, paste the following commands
@@ -366,6 +399,8 @@ Alright, now you should see something like this on your terminal
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668520715183/Eqg9u93wj.png"
   alt="shell screenshot"
+  width={1000}
+  height={1000}
 />
 
 If you do, then GREAT!! Now, if you're ready to see some magic, copy the public dns address of you instance from your EC2 console, which should look something like `ec2-44-201-126-205.compute-1.amazonaws.com`.
@@ -385,6 +420,8 @@ http://ec2-44-201-126-205.compute-1.amazonaws.com:3000/
 <Image
   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1668521001253/MBL3KjWgc.png"
   alt="web screenshot"
+  width={1000}
+  height={1000}
 />
 
 If you see your app then CONGRATULATIONS!!! 🚀 We have made it.

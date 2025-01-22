@@ -1,10 +1,13 @@
----
-title: "Overcoming Axios Limitations in Service Workers"
-summary: "Overcome the limitation of Axios not working within Service Workers by using a custom Fetch adapter."
-publishedAt: "2023-07-31"
-image: /images/axios/1.png
-published: true
----
+export const metadata = {
+  title: "Overcoming Axios Limitations in Service Workers",
+  description:
+    "Overcome the limitation of Axios not working within Service Workers by using a custom Fetch adapter.",
+  openGraph: {
+    images: "/images/axios/1.png",
+  },
+  publishedAt: "2023-07-31",
+  slug: "axios",
+};
 
 In this post, we are going to address an issue that's not widely documented: Axios, a widely-used HTTP client, does not work with Service Workers. We'll delve into the reasons behind this and provide a workaround for anyone facing the same issue.
 

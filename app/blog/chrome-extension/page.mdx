@@ -1,19 +1,15 @@
----
-title: "Deep Dive into Chrome Extensions: From Lifecycle to Dataflow"
-summary: "Unveiling Chrome Extension Insights: Lifecycle, Dataflow & More. Gain a deep understanding of extension creation and data management."
-publishedAt: "2023-07-07"
-image: /images/chrome-extension/1.webp
-published: true
----
+export const metadata = {
+  title: "Deep Dive into Chrome Extensions: From Lifecycle to Dataflow",
+  description:
+    "Unveiling Chrome Extension Insights: Lifecycle, Dataflow & More. Gain a deep understanding of extension creation and data management.",
+  openGraph: {
+    images: "/images/chrome-extension/1.webp",
+  },
+  publishedAt: "2023-07-07",
+  slug: "chrome-extension",
+};
 
 Developing a Chrome extension can be an exciting way to customize your browser's functionality or build a product that serves millions of users worldwide. In this post, we will take a deep dive into the architecture of a Chrome extension, what are all the components that work together to make up a browser extension, what is the Lifecycle of each of those components, and how data flows between them. We'll also delve into the nuances between Manifest V2 and V3.
-
-<Callout type="warning">
-  In this post, we will mostly be covering Google Chrome's manifest version 3.
-  But there are no major differences when it comes to other browsers and
-  manifest versions when we are talking about the high-level architecture of
-  browser extensions.
-</Callout>
 
 First, let's go through some of the core components of a basic Chrome extension, then we'll deep-dive into their relationship
 
@@ -146,13 +142,6 @@ Now that we have a little idea of what each component does, let's look at how th
     );
   });
   ```
-
-The below diagram tries to visualize the component, APIs and the data flow between them:
-
-<Image
-  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1688728321583/39efd8c9-508c-43dc-9f39-6ad2ca20f70c.png"
-  alt="Chrome Extension Dataflow"
-/>
 
 ### Message-passing model
 

@@ -1,4 +1,4 @@
-import { ROOT_DOMAIN } from "@/lib/constants";
+const ROOT_DOMAIN = "https://sriniously.xyz";
 
 export default function robots() {
   return {

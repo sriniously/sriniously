@@ -1,10 +1,11 @@
-import { cn } from "@/lib/utils";
-import "../styles/globals.css";
+import "./globals.css";
 import type { Metadata } from "next";
+import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
 import Header from "@/components/header";
-import { ROOT_DOMAIN } from "@/lib/constants";
 import Footer from "@/components/footer";
+
+const ROOT_DOMAIN = "https://sriniously.xyz";
 
 const ysabeau = localFont({
   src: [
@@ -51,8 +52,8 @@ export const metadata: Metadata = {
   twitter: {
     title: "Sriniously | K Srinivas Rao",
     card: "summary_large_image",
-    site: "@Srinu53168",
-    creator: "@Srinu53168",
+    site: "@sriniously",
+    creator: "@sriniously",
   },
 };
 export default function RootLayout({
@@ -61,18 +62,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={cn(
-        "bg-background w-full lg:max-w-3xl text-xl px-4 lg:mx-auto text-foreground",
-        ysabeau.className
-      )}
-    >
-      <body>
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" className={`${ysabeau.className}`}>
+        <body className="antialiased tracking-tight">
+          <div className="min-h-screen flex flex-col justify-between pt-0 md:pt-8 p-8 bg-white text-gray-900">
+            <main className="max-w-4xl mx-auto w-full space-y-6">
+              <Header />
+              {children}
+              <Footer />
+            </main>
+          </div>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

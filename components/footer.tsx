@@ -1,5 +1,4 @@
 import { FaXTwitter } from "react-icons/fa6";
-import { BsDiscord } from "react-icons/bs";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { BiLogoProductHunt } from "react-icons/bi";
 
@@ -7,14 +6,14 @@ const Footer = () => {
   return (
     <footer className="flex py-5 justify-center items-center w-full gap-3 border-t-2 border-primary">
       <a
-        href="https://github.com/hellskater"
+        href="https://github.com/sriniously"
         rel="noopener noreferrer"
         target="_blank"
       >
         <AiFillGithub className="text-black text-lg" />
       </a>
       <a
-        href="https://twitter.com/Srinu53168"
+        href="https://twitter.com/sriniously"
         rel="noopener noreferrer"
         target="_blank"
       >
