@@ -10,11 +10,11 @@ import NoteMakingGrid from "./grids/note-making";
 export default function Gear() {
   return (
     <div className="min-h-screen flex flex-col gap-10">
-      <DevelopmentGrid />
-      <AudioGrid />
       <EnginesGrid />
+      <DevelopmentGrid />
       <MacGrid />
       <VideoGrid />
+      <AudioGrid />
       <NoteMakingGrid />
       <GamingGrid />
       <MiscGrid />
