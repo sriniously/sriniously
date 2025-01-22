@@ -57,7 +57,7 @@ export default async function Blog() {
     <div className="pb-20 flex flex-col gap-10">
       {blogMetadatas.map((post) => (
         <Link href={`/blog/${post.slug}`} className="group" key={post.slug}>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2 group-hover:underline underline-offset-4">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:underline underline-offset-4">
             {post.title}
           </h2>
           <p className="text-gray-600 mb-2">{post.description}</p>
