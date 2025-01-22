@@ -3,6 +3,9 @@ import DevelopmentGrid from "./grids/development";
 import EnginesGrid from "./grids/engines";
 import GamingGrid from "./grids/gaming";
 import MiscGrid from "./grids/misc";
+import MacGrid from "./grids/mac";
+import VideoGrid from "./grids/video";
+import NoteMakingGrid from "./grids/note-making";
 
 export default function Gear() {
   return (
@@ -10,6 +13,9 @@ export default function Gear() {
       <DevelopmentGrid />
       <AudioGrid />
       <EnginesGrid />
+      <MacGrid />
+      <VideoGrid />
+      <NoteMakingGrid />
       <GamingGrid />
       <MiscGrid />
     </div>
