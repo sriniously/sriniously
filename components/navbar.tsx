@@ -12,6 +12,10 @@ const links = [
     href: "/blog",
     label: "blog",
   },
+  {
+    href: "/gear",
+    label: "gear",
+  },
 ];
 
 const Navbar = () => {
