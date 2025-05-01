@@ -32,6 +32,8 @@ const Navbar = () => {
           const isActive =
             pathname.includes("/blog/") && href.includes("/blog")
               ? pathname.includes(href)
+              : pathname.includes("/musings/") && href.includes("/musings")
+              ? pathname.includes(href)
               : pathname === href;
 
           return (
