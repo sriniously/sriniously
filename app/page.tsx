@@ -38,9 +38,7 @@ const data = [
   {
     title: "I write stuff sometimes",
     content: (
-      <Link
-        href="/blog"
-      >
+      <Link href="/blog">
         <PenTool className="w-60 h-60" />
       </Link>
     ),

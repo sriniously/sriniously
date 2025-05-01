@@ -18,19 +18,44 @@ async function getBlogSlugs(dir: string) {
     .map((slug) => slug.replace(/\\/g, "/"));
 }
 
-export default async function sitemap() {
-  const notesDirectory = path.join(process.cwd(), "app", "blog");
-  const slugs = await getBlogSlugs(notesDirectory);
+async function getMusingSlugs(dir: string) {
+  const entries = await fs.readdir(dir, {
+    recursive: true,
+    withFileTypes: true,
+  });
+  return entries
+    .filter((entry) => entry.isFile() && entry.name === "page.mdx")
+    .map((entry) => {
+      const relativePath = path.relative(
+        dir,
+        path.join(entry.parentPath, entry.name)
+      );
+      return path.dirname(relativePath);
+    })
+    .map((slug) => slug.replace(/\\/g, "/"));
+}
 
-  const blogs = slugs.map((slug) => ({
+export default async function sitemap() {
+  const blogDirectory = path.join(process.cwd(), "app", "blog");
+  const musingsDirectory = path.join(process.cwd(), "app", "musings");
+
+  const blogSlugs = await getBlogSlugs(blogDirectory);
+  const musingSlugs = await getMusingSlugs(musingsDirectory);
+
+  const blogs = blogSlugs.map((slug) => ({
     url: `https://sriniously.xyz/blog/${slug}`,
     lastModified: new Date().toISOString(),
   }));
 
-  const routes = ["", "/blog"].map((route) => ({
+  const musings = musingSlugs.map((slug) => ({
+    url: `https://sriniously.xyz/musings/${slug}`,
+    lastModified: new Date().toISOString(),
+  }));
+
+  const routes = ["", "/blog", "/musings"].map((route) => ({
     url: `https://sriniously.xyz${route}`,
     lastModified: new Date().toISOString(),
   }));
 
-  return [...routes, ...blogs];
+  return [...routes, ...blogs, ...musings];
 }

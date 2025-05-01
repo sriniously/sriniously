@@ -13,6 +13,10 @@ const links = [
     label: "blog",
   },
   {
+    href: "/musings",
+    label: "off-topic",
+  },
+  {
     href: "/gear",
     label: "gear",
   },
