@@ -30,14 +30,6 @@ export const metadata: Metadata = {
     template: "%s | Sriniously",
   },
   description: "Pixels, Punches, Plot Twists",
-  openGraph: {
-    title: "Sriniously | K Srinivas Rao",
-    description: "Pixels, Punches, Plot Twists",
-    url: ROOT_DOMAIN,
-    siteName: "Sriniously",
-    locale: "en-US",
-    type: "website",
-  },
   robots: {
     index: true,
     follow: true,
@@ -48,13 +40,7 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  twitter: {
-    title: "Sriniously | K Srinivas Rao",
-    card: "summary_large_image",
-    site: "@sriniously",
-    creator: "@sriniously",
-  },
+  }
 };
 export default function RootLayout({
   children,
