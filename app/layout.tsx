@@ -4,6 +4,7 @@ import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import ReadingProgress from "@/components/reading-progress";
 
 const ROOT_DOMAIN = "https://sriniously.xyz";
 
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  }
+  },
 };
 export default function RootLayout({
   children,
@@ -51,6 +52,7 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en" className={`${ysabeau.className}`}>
         <body className="antialiased tracking-tight">
+          <ReadingProgress />
           <div className="min-h-screen flex flex-col justify-between pt-0 md:pt-8 p-8 bg-white text-gray-900">
             <main className="max-w-4xl mx-auto w-full space-y-6">
               <Header />
